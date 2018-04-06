@@ -1,0 +1,15 @@
+<div class="col-md-4 col-md-offset-4">
+  <h2 style="text-align: center;">短网址生成中心</h2>
+
+  <hr>
+  <%= simple_form_for @url do |f| %>
+    <div class="form-group">
+      <%= f.input :original_url, label: '输入网址：', input_html: { class: "form-control"} %>
+    </div>
+    <br>
+
+    <div style="text-align: right">
+      <%= f.submit "生成短网址", class: "btn btn-primary", data: { disable_with: "提交中..." } %>
+    </div>
+  <% end %>
+</div>
