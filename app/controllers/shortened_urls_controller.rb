@@ -14,8 +14,10 @@ class ShortenedUrlsController < ApplicationController
     @url = ShortenedUrl.new(url_params)
     # @url.original_url = params[:original_url]
     @url.sanitize
+    qr_code_img = RQRCode::QRCode.new(@url.original_url, :size => 26, :level => :h ).to_img.resize(300, 300)
     if @url.new_url?
       if @url.save
+        @url.update_attribute :qr_code, qr_code_img.to_string
         redirect_to shortened_path(@url.short_url)
       else
         render :index
@@ -43,7 +45,7 @@ class ShortenedUrlsController < ApplicationController
       @url = ShortenedUrl.find_by_short_url(params[:short_url])
     end
 
-  def url_params
-    params.require(:shortened_url).permit(:original_url)
-  end
+    def url_params
+      params.require(:shortened_url).permit(:original_url)
+    end
 end
