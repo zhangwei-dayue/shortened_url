@@ -1,5 +1,4 @@
-class ShortenedUrl < ApplicationRecord\
-  extend Dragonfly::Model
+class ShortenedUrl < ApplicationRecord
   dragonfly_accessor :qr_code
 
   UNIQUE_ID_LENGTN = 3

@@ -2,7 +2,7 @@ sh "ssh-add"
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.10.1"
 
-set :application, "shortened_url"
+set :application, "url_shortener_web"
 set :repo_url, "git@github.com:zhangwei-dayue/shortened_url.git"
 
 # Default branch is :master
@@ -10,7 +10,7 @@ set :repo_url, "git@github.com:zhangwei-dayue/shortened_url.git"
 
 # Default deploy_to directory is /var/www/my_app_name
 # set :deploy_to, "/var/www/my_app_name"
-set :deploy_to, "/home/deploy/shortened_url"
+set :deploy_to, "/home/url_shortener_web"
 
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
@@ -24,10 +24,11 @@ set :deploy_to, "/home/deploy/shortened_url"
 
 # Default value for :linked_files is []
 # append :linked_files, "config/database.yml", "config/secrets.yml"
+append :linked_files, "config/database.yml", "config/secrets.yml"
 
 # Default value for linked_dirs is []
-# append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
-append :linked_files, "config/database.yml", "config/secrets.yml"
+append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
+
 
 set :passenger_restart_with_touch, true
 
