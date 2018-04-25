@@ -29,3 +29,5 @@ docker/mysql/db/*
 docker/rails/bundle/*
 !docker/rails/bundle/.keep
 .env
+config/secrets.yml
+config/puma.rb

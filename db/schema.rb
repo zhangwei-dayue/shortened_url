@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 20180408023851) do
 
-  create_table "shortened_urls", force: :cascade do |t|
+  create_table "shortened_urls", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "original_url"
     t.string "short_url"
     t.string "sanitize_url"
