@@ -13,7 +13,7 @@ require 'mina/rbenv'  # for rbenv support. (https://rbenv.org)
 
 set :application_name, 'url_shortener'
 set :domain, 'zhangwei@47.105.50.78'
-set :deploy_to, '/var/www/url_shortener'
+set :deploy_to, '/home/zhangwei/zhangwei/var/www/url_shortener'
 set :repository, 'https://github.com/zhangwei-dayue/shortened_url.git'
 set :branch, 'master'
 
