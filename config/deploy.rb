@@ -12,8 +12,8 @@ require 'mina/rbenv'  # for rbenv support. (https://rbenv.org)
 #   branch       - Branch name to deploy. (needed by mina/git)
 
 set :application_name, 'url_shortener'
-set :domain, 'zhangwei@47.105.50.78'
-set :deploy_to, '/home/zhangwei/zhangwei/var/www/url_shortener'
+set :domain, 'zhangwei@47.94.98.254'
+set :deploy_to, '/var/www/url_shortener'
 set :repository, 'https://github.com/zhangwei-dayue/shortened_url.git'
 set :branch, 'master'
 
@@ -28,7 +28,7 @@ set :shared_files, fetch(:shared_files, []).push('config/database.yml', 'config/
 
 # This task is the environment that is loaded for all remote run commands, such as
 # `mina deploy` or `mina rake`.
-task :environment do
+task :remote_environment do
   # If you're using rbenv, use this to load the rbenv environment.
   # Be sure to commit your .ruby-version or .rbenv-version to your repository.
   invoke :'rbenv:load'
@@ -48,7 +48,7 @@ task :setup do
 end
 
 desc "Deploys the current version to the server."
-task :deploy do
+task deploy: :remote_environment do
   # uncomment this line to make sure you pushed your local branch to the remote origin
   # invoke :'git:ensure_pushed'
   deploy do
