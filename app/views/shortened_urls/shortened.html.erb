@@ -1,9 +1,10 @@
 <div class="col-md-8 col-md-offset-2">
   <h2 style="text-align: center;">短网址生成中心</h2>
   <hr>
-  <h4>原网址： <%= @original_url %></h4>
+  <h4>原网址： </h4>
+  <p style="padding-left: 30px; margin-bottom: 0px; font-size: 18px"><%= @original_url %></p>
   <h4>短网址： </h4>
-  <p style="padding-left: 30px; margin-bottom: 0px; font-size: 18px"><%=link_to(@short_url, @short_url)%></p>
+  <p style="padding-left: 30px; margin-bottom: 0px; font-size: 18px"><%= @short_url %></p>
   <h4>二维码： </h4>
   <div class="qr_code">
     <%= image_tag @url.qr_code.thumb('300x300#').url if @url.qr_code_stored? %>
