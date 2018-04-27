@@ -35,6 +35,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 gem 'bootstrap-sass'
 gem 'simple_form'
+gem 'chunky_png'
 gem 'rqrcode'
 gem 'rqrcode_png'
 gem 'dragonfly', '~> 1.1.5'
@@ -49,8 +50,6 @@ group :development, :test do
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
   gem 'sqlite3'
-  gem 'capistrano-rails'
-  gem 'capistrano-passenger'
 end
 
 group :development do
