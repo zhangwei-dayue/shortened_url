@@ -13,20 +13,27 @@ class ShortenedUrlsController < ApplicationController
   def create
     @url = ShortenedUrl.new(url_params)
     @url.sanitize
-    if @url.new_url?
-      if @url.save
-        host = request.host_with_port
-        short_url = 'http://' + host + '/' + @url.short_url
-        qr_code_img = RQRCode::QRCode.new(short_url, level: :h ).to_img.resize(300, 300)
+    @host = request.host_with_port
 
-        @url.update_attributes(qr_code: qr_code_img.to_string)
-        redirect_to shortened_path(@url.short_url)
+    respond_to do |format|
+      if @url.new_url?
+        if @url.save
+          short_url = 'http://' + @host + '/' + @url.short_url
+          qr_code_img = RQRCode::QRCode.new(short_url, level: :h ).to_img.resize(300, 300)
+
+          @url.update_attributes(qr_code: qr_code_img.to_string)
+          format.html { redirect_to shortened_path(@url.short_url) }
+          format.json { render :show, status: :ok }
+        else
+          format.html { render :index }
+          format.json { render json: { message: @url.errors.full_messages, success: false}, status: :unprocessable_entity }
+        end
       else
-        render :index
+        flash[:alert] = '该链接已经生成过短网址'
+        @url = @url.find_duplicate
+        format.html { redirect_to shortened_path(@url.short_url) }
+        format.json { render :show, status: :ok }
       end
-    else
-      flash[:alert] = '该链接已经生成过短网址'
-      redirect_to shortened_path(@url.find_duplicate.short_url)
     end
   end
 

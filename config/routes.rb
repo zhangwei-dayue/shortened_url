@@ -5,5 +5,6 @@ Rails.application.routes.draw do
   get "/:short_url", to: "shortened_urls#show"
   get "shortened/:short_url", to: "shortened_urls#shortened", as: :shortened
   post :"/shortened_urls", to: "shortened_urls#create"
+  post :"/shortened_urls.json", to: "shortened_urls#create"
   get "/shortened_urls/fetch_original_url", to: "shortened_urls#fetch_original_url"
 end
