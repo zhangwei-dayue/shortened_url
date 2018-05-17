@@ -9,7 +9,7 @@ Dragonfly.app.configure do
   url_format "/media/:job/:name"
 
   datastore :file,
-    root_path: Rails.root.join('public/system/dragonfly', Rails.env),
+    root_path: [Rails.root.to_s.split("/release").first, "/shared/public/dragonfly/", Rails.env].join,
     server_root: Rails.root.join('public')
 end
 
