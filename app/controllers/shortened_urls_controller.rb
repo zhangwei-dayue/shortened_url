@@ -37,15 +37,38 @@ class ShortenedUrlsController < ApplicationController
     end
   end
 
-  def send_png_file
-    @url = ShortenedUrl.find_by_original_url(url_params[:original_url])
-    render json: {message: '你请求的网站还未生成短网址，请先生成短网址再进行操作', success: false}, status: :unprocessable_entity and return if @url.blank?
+  def png_way
+    @url = ShortenedUrl.new(url_params)
+    @url.sanitize
+    @host = request.host_with_port
     prefix = "/shared/public/dragonfly/"
-    file = [Rails.root.to_s.split("/release").first, prefix, Rails.env, '/', @url.qr_code_uid].join
-    data = open(file).read
+
     respond_to do |format|
-      format.png do
-        send_data data, type: 'image/png', disposition: 'inline'
+      if @url.new_url?
+        if @url.save
+          short_url = 'http://' + @host + '/' + @url.short_url
+          qr_code_img = RQRCode::QRCode.new(short_url, level: :h ).to_img.resize(300, 300)
+
+          @url.update_attributes(qr_code: qr_code_img.to_string)
+
+          file = [Rails.root.to_s.split("/release").first, prefix, Rails.env, '/', @url.qr_code_uid].join
+          data = open(file).read
+
+          format.png do
+            send_data data, type: 'image/png', disposition: 'inline'
+          end
+        else
+          format.json { render json: { message: @url.errors.full_messages, success: false}, status: :unprocessable_entity }
+        end
+      else
+        flash[:alert] = '该链接已经生成过短网址'
+        @url = @url.find_duplicate
+        file = [Rails.root.to_s.split("/release").first, prefix, Rails.env, '/', @url.qr_code_uid].join
+        data = open(file).read
+
+        format.png do
+          send_data data, type: 'image/png', disposition: 'inline'
+        end
       end
     end
   end
