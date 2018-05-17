@@ -37,6 +37,18 @@ class ShortenedUrlsController < ApplicationController
     end
   end
 
+  def send_png_file
+    @url = ShortenedUrl.find_by_original_url(url_params[:original_url])
+    render json: {message: '你请求的网站还未生成短网址，请先生成短网址再进行操作', success: false}, status: :unprocessable_entity and return if @url.blank?
+    prefix = "/public/system/dragonfly/production/"
+    data = open([Rails.root, prefix, @url.qr_code_uid].join).read
+    respond_to do |format|
+      format.png do
+        send_data data, type: 'image/png', disposition: 'inline'
+      end
+    end
+  end
+
   def shortened
     @url = ShortenedUrl.find_by_short_url(params[:short_url])
     host = request.host_with_port
