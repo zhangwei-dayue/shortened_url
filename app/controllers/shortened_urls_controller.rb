@@ -92,7 +92,7 @@ class ShortenedUrlsController < ApplicationController
 
     def update_request_statistics
       user_agent = UserAgent.parse(request.user_agent)
-      request_user_agent = RequestUserAgent.find_or_create_by(platform: user_agent.platform, browser: user_agent.platform, version: user_agent.version)
+      request_user_agent = RequestUserAgent.find_or_create_by(platform: user_agent.platform, browser: user_agent.platform)
 
       # 更新请求数量
       view_statistics = ViewStatistic.find_or_create_by(shortened_url_id: @url.id, request_user_agent_id: request_user_agent.id)
