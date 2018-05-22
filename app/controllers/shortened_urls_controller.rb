@@ -1,5 +1,6 @@
 class ShortenedUrlsController < ApplicationController
   before_action :find_url, only: [:show, :shortened]
+  before_action :update_request_statistics, only: [:show]
   skip_before_action :verify_authenticity_token
 
   def index
@@ -87,6 +88,15 @@ class ShortenedUrlsController < ApplicationController
   private
     def find_url
       @url = ShortenedUrl.find_by_short_url(params[:short_url])
+    end
+
+    def update_request_statistics
+      user_agent = UserAgent.parse(request.user_agent)
+      request_user_agent = RequestUserAgent.find_or_create_by(platform: user_agent.platform, browser: user_agent.platform, version: user_agent.version)
+
+      # 更新请求数量
+      view_statistics = ViewStatistic.find_or_create_by(shortened_url_id: @url.id, request_user_agent_id: request_user_agent.id)
+      view_statistics.increment!(:count)
     end
 
     def url_params

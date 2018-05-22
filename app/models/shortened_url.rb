@@ -1,6 +1,8 @@
 class ShortenedUrl < ApplicationRecord
   dragonfly_accessor :qr_code
 
+  has_many :view_statistics
+
   UNIQUE_ID_LENGTN = 3
   validates :original_url, presence: { message: "请输入网址" }
   validates_format_of :original_url, with: /\A(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?\z/ix, message: "输入的网址是无效的"
