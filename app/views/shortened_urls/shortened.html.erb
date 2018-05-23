@@ -8,10 +8,10 @@
     </div>
     <div class="row">
       <div class="col-md-6 text-center"><h4>二维码</h4></div>
-      <div class="col-md-6 text-center"><h4>短网址</h4></div>
+      <div class="col-md-6 text-center", style="padding-right: 70px;"><h4>短网址</h4></div>
     </div>
     <div class="row">
-      <div class="col-md-4", style="padding-left: 50px";>
+      <div class="col-md-4", style="padding-left: 80px";>
         <div class="qr_code">
           <%= image_tag @url.qr_code.thumb('300x300#').url if @url.qr_code_stored? %>
         </div>

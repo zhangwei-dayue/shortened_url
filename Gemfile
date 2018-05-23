@@ -39,7 +39,7 @@ gem 'chunky_png'
 gem 'rqrcode'
 gem 'rqrcode_png'
 gem 'dragonfly', '~> 1.1.5'
-gem 'useragent'
+gem "browser"
 
 gem 'mina', require: false
 gem 'mina-puma', require: false
