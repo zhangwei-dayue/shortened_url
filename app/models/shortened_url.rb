@@ -1,7 +1,7 @@
 class ShortenedUrl < ApplicationRecord
   dragonfly_accessor :qr_code
 
-  has_many :view_statistics
+  has_many :request_user_agents
 
   UNIQUE_ID_LENGTN = 3
   validates :original_url, presence: { message: "请输入网址" }

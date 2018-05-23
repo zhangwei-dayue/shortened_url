@@ -91,13 +91,12 @@ class ShortenedUrlsController < ApplicationController
     end
 
     def update_request_statistics
-      user_agent = Browser.new(request.user_agent, accept_language: "en-us")
+      user_agent = request.user_agent
 
-      request_user_agent = RequestUserAgent.find_or_create_by(platform_name: user_agent.platform.name, platform_version: user_agent.platform.version, browser_name: user_agent.name, browser_version: user_agent.full_version)
+      @url.request_user_agents.create(user_agent_content: user_agent)
 
       # 更新请求数量
-      view_statistics = ViewStatistic.find_or_create_by(shortened_url_id: @url.id, request_user_agent_id: request_user_agent.id)
-      view_statistics.increment!(:count)
+      @url.increment!(:request_count)
     end
 
     def url_params

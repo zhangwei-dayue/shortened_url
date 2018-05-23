@@ -1,3 +1,3 @@
 class RequestUserAgent < ApplicationRecord
-  has_many :view_statistics
+  belongs_to :shortened_url
 end
