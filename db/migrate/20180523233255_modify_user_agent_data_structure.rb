@@ -1,6 +1,5 @@
 class ModifyUserAgentDataStructure < ActiveRecord::Migration[5.1]
   def change
-    add_reference :request_user_agents, :shortened_urls, index: true
     rename_column :request_user_agents, :platform_name, :user_agent_content
     change_column :request_user_agents, :user_agent_content, :text
     remove_column :request_user_agents, :browser_name
