@@ -19,7 +19,7 @@ class ShortenedUrlsController < ApplicationController
     respond_to do |format|
       if @url.new_url?
         if @url.save
-          short_url = 'http://' + @host + '/' + @url.short_url
+          short_url = @host + '/' + @url.short_url
           qr_code_img = RQRCode::QRCode.new(short_url, level: :h ).to_img.resize(300, 300)
 
           @url.update_attributes(qr_code: qr_code_img.to_string)
@@ -47,7 +47,7 @@ class ShortenedUrlsController < ApplicationController
     respond_to do |format|
       if @url.new_url?
         if @url.save
-          short_url = 'http://' + @host + '/' + @url.short_url
+          short_url = @host + '/' + @url.short_url
           qr_code_img = RQRCode::QRCode.new(short_url, level: :h ).to_img.resize(300, 300)
 
           @url.update_attributes(qr_code: qr_code_img.to_string)
