@@ -16,7 +16,6 @@ class ShortenedUrlsController < ApplicationController
     @url.sanitize
     @host = request.host_with_port
 
-
     respond_to do |format|
       if @url.new_url?
         query_hash = Rack::Utils.parse_query URI(@url.original_url).query
@@ -27,7 +26,7 @@ class ShortenedUrlsController < ApplicationController
         @url.utm_campaign = query_hash["utm_campaign"]
 
         if @url.save
-          short_url = @host + '/' + @url.short_url
+          short_url = 'http://' + @host + '/' + @url.short_url
           qr_code_img = RQRCode::QRCode.new(short_url, level: :h ).to_img.resize(300, 300)
 
           @url.update_attributes(qr_code: qr_code_img.to_string)
@@ -55,7 +54,7 @@ class ShortenedUrlsController < ApplicationController
     respond_to do |format|
       if @url.new_url?
         if @url.save
-          short_url = @host + '/' + @url.short_url
+          short_url = 'http://' + @host + '/' + @url.short_url
           qr_code_img = RQRCode::QRCode.new(short_url, level: :h ).to_img.resize(300, 300)
 
           @url.update_attributes(qr_code: qr_code_img.to_string)
