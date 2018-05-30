@@ -12,7 +12,7 @@ require 'mina/rbenv'  # for rbenv support. (https://rbenv.org)
 #   branch       - Branch name to deploy. (needed by mina/git)
 
 set :application_name, 'url_shortener'
-set :domain, 'zhangwei@47.94.98.254'
+set :domain, 'zhangwei@59.110.168.32'
 set :deploy_to, '/var/www/url_shortener'
 set :repository, 'https://github.com/zhangwei-dayue/shortened_url.git'
 set :branch, 'master'
