@@ -46,13 +46,23 @@ class ShortenedUrlsController < ApplicationController
   end
 
   def png_way
-    @url = ShortenedUrl.new(url_params)
+    request_url = request.url
+    request_url.slice!(0..(request_url.index('shortened_url[original_url]=') + 27))
+
+    @url = ShortenedUrl.new(original_url: request_url)
     @url.sanitize
     @host = request.host_with_port
     prefix = "/shared/public/dragonfly/"
 
     respond_to do |format|
       if @url.new_url?
+        query_hash = Rack::Utils.parse_query URI(@url.original_url).query
+        @url.utm_source = query_hash["utm_source"]
+        @url.utm_medium = query_hash["utm_medium"]
+        @url.utm_term = query_hash["utm_term"]
+        @url.utm_content = query_hash["utm_content"]
+        @url.utm_campaign = query_hash["utm_campaign"]
+
         if @url.save
           short_url = 'http://' + @host + '/' + @url.short_url
           qr_code_img = RQRCode::QRCode.new(short_url, level: :h ).to_img.resize(300, 300)
