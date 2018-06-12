@@ -46,10 +46,7 @@ class ShortenedUrlsController < ApplicationController
   end
 
   def png_way
-    request_url = request.url
-    request_url.slice!(0..(request_url.index('shortened_url[original_url]=') + 27))
-
-    @url = ShortenedUrl.new(original_url: request_url)
+    @url = ShortenedUrl.new(url_params)
     @url.sanitize
     @host = request.host_with_port
     prefix = "/shared/public/dragonfly/"
