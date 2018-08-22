@@ -1,5 +1,5 @@
 <div class="col-md-8 col-md-offset-2">
-  <h2 style="text-align: center;">短网址生成中心</h2>
+  <h2>短网址生成中心</h2>
 
   <hr>
   <%= simple_form_for @url do |f| %>
@@ -8,7 +8,7 @@
     </div>
     <br>
 
-    <div style="text-align: right">
+    <div class="submit">
       <%= f.submit "生成短网址", class: "btn btn-primary", data: { disable_with: "提交中..." } %>
     </div>
   <% end %>

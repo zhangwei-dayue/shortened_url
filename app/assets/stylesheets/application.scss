@@ -31,3 +31,44 @@ html,body {
 .container-fluid:after, footer {
   height: -50px;
 }
+
+h2 {
+  text-align: center;
+}
+
+#original_url {
+  margin-bottom: 30px;
+}
+
+#original_url p {
+  padding-left: 30px;
+  margin-bottom: 0px;
+  font-size: 18px;
+}
+
+#short_url_title {
+  padding-right: 70px;
+}
+
+#qr_code_image {
+  padding-left: 80px;
+}
+
+#short_url {
+  padding-left: 0px;
+  padding-top: 100px;
+  padding-bottom: 120px;
+  margin-left: 200px;
+  margin-top: 25px;
+  border-style: groove;
+}
+
+#short_url p {
+  padding-left: 30px;
+  margin-bottom: 0px;
+  font-size: 18px;
+}
+
+.submit {
+  text-align: right;
+}
