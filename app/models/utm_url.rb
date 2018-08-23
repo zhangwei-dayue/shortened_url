@@ -1,0 +1,2 @@
+class UtmUrl < ApplicationRecord
+end
