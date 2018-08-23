@@ -41,12 +41,24 @@
 </div>
 <div>
   <select id="content_type">
+    <option value="detailpage">详情页</option>
     <option value="article">文章</option>
     <option value="video">视频</option>
-    <option value="detailpage">详情页</option>
   </select>
   <input type="number" id="content_id" />
   <input type="text" id="content_input" />
+</div>
+<div>
+  <input type="text" id="utm_source">
+  <input type="text" id="utm_medium">
+  <input type="text" id="utm_campaign">
+  <input type="text" id="utm_content">
+  <input type="text" id="source">
+  <input type="text" id="sourceLinkType">
+  <input type="text" id="sourceObjID">
+</div>
+<div>
+  <button onclick="">提交</button>
 </div>
 <script>
   var source = new Array()
@@ -89,6 +101,7 @@
       container.add(op)
     }
     sourceStr = type.options[type.selectedIndex].value + '-' + container.options[container.selectedIndex].value
+    $('#utm_source').attr('value',sourceStr)
   }
   $(document).ready(function () {
     var type = document.getElementById("source_type")
@@ -107,6 +120,7 @@
     }
     container.onchange = function () {
       sourceStr = type.options[type.selectedIndex].value + '-' + container.options[container.selectedIndex].value
+      $('#utm_source').attr('value',sourceStr)
     }
   })
   // medium
@@ -126,6 +140,7 @@
         var poster = document.getElementById("poster")
         style.removeChild(poster)
         sources = "source='Link'" 
+        $('#source').attr('value', "source='Link'")
       } else {
         var createOption = document.createElement('option')
         createOption.value="poster"
@@ -133,6 +148,7 @@
         createOption.id="poster"
         style.appendChild(createOption)
         sources = ''
+        $('#source').attr('value', "")
       }
       if(!container_value && !style_value){
         mediumStr = type_value
@@ -143,6 +159,7 @@
       }else{
         mediumStr = type_value + '-' + container_value+ '-' + style_value
       }
+      $('#utm_medium').attr('value',mediumStr)
       console.log(mediumStr)
       console.log(sources)
     }
@@ -162,6 +179,7 @@
       }else{
         mediumStr = type_value + '-' + container_value+ '-' + style_value
       }
+      $('#utm_medium').attr('value',mediumStr)
       console.log(mediumStr)
     }
     style.onchange = function () {
@@ -171,8 +189,8 @@
       var type_value = type.options[type.selectedIndex].value
       var container_value = container.options[container.selectedIndex].value
       var style_value = style.options[style.selectedIndex].value
-      if(type_value === 'poster') {
-        sources = "source='scanPoster'" 
+      if(style_value === 'poster') {
+        $('#source').attr('value', "source='scanPoster'")
       }
       if(!container_value && !style_value){
         mediumStr = type_value
@@ -186,27 +204,41 @@
       console.log(mediumStr)
     }
     mediumStr = type_value
+    $('#utm_medium').attr('value',mediumStr)
     console.log(mediumStr)
   })
   // campaign
   $(document).ready(function () {
     var type = document.getElementById("campaign_type")
     var input = document.getElementById("campaign_input")
-    type.onchange = function () {
-      if(input.value){
+    if(input.value){
         campaignStr = type.options[type.selectedIndex].value + '-' + input.value
+        $('#utm_campaign').attr('value',campaignStr)
         console.log(campaignStr)
       }else{
         campaignStr = type.options[type.selectedIndex].value
+        $('#utm_campaign').attr('value',campaignStr)
+        console.log(campaignStr)
+      }
+    type.onchange = function () {
+      if(input.value){
+        campaignStr = type.options[type.selectedIndex].value + '-' + input.value
+        $('#utm_campaign').attr('value',campaignStr)
+        console.log(campaignStr)
+      }else{
+        campaignStr = type.options[type.selectedIndex].value
+        $('#utm_campaign').attr('value',campaignStr)
         console.log(campaignStr)
       }
     }
     input.onchange = function () {
       if(input.value){
         campaignStr = type.options[type.selectedIndex].value + '-' + input.value
+        $('#utm_campaign').attr('value',campaignStr)
         console.log(campaignStr)
       }else{
         campaignStr = type.options[type.selectedIndex].value
+        $('#utm_campaign').attr('value',campaignStr)
         console.log(campaignStr)
       }
     }
@@ -216,33 +248,38 @@
     var type = document.getElementById("content_type")
     var input = document.getElementById("content_input")
     var id = document.getElementById('content_id')
-    if(type.options[type.selectedIndex].value === 'video'){
-      sourceLinkType='video'
-    }
-    if(type.options[type.selectedIndex].value === 'article'){
-      sourceLinkType='article'
+    if(input.value){
+      contentStr = type.options[type.selectedIndex].value + '-' + id.value +'-' +input.value
+      $('#utm_content').attr('value',contentStr)
+      console.log(contentStr)
+    }else{
+      contentStr = type.options[type.selectedIndex].value + '-' + id.value
+      $('#utm_content').attr('value',contentStr)
+      console.log(contentStr)
     }
     type.onchange = function () {
       if(input.value){
         contentStr = type.options[type.selectedIndex].value + '-' + id.value +'-' +input.value
+        $('#utm_content').attr('value',contentStr)
         console.log(contentStr)
       }else{
         contentStr = type.options[type.selectedIndex].value + '-' + id.value
+        $('#utm_content').attr('value',contentStr)
         console.log(contentStr)
       }
       if(type.options[type.selectedIndex].value === 'video'){
         sourceLinkType='video'
-      }else{
-        sourceLinkType = ''
-      }
-
-      if(type.options[type.selectedIndex].value === 'article'){
+        console.log(123)
+        $('#sourceLinkType').attr('value','video')
+      }else if(type.options[type.selectedIndex].value === 'article'){
         sourceLinkType='article'
+        $('#sourceLinkType').attr('value','article')
       }else{
-        sourceLinkType = ''
+        $('#sourceLinkType').attr('value','')
       }
     }
     id.onchange = function () {
+      $('#sourceObjID').attr('value', id.value)
       if(input.value){
         contentStr = type.options[type.selectedIndex].value + '-' + id.value +'-' +input.value
         console.log(contentStr)
@@ -250,14 +287,15 @@
         contentStr = type.options[type.selectedIndex].value + '-' + id.value
         console.log(contentStr)
       }
-      sourceObjID = id.value
     }
     input.onchange = function () {
       if(input.value){
         contentStr = type.options[type.selectedIndex].value + '-' + id.value +'-' +input.value
+        $('#utm_content').attr('value',contentStr)
         console.log(contentStr)
       }else{
         contentStr = type.options[type.selectedIndex].value + '-' + id.value
+        $('#utm_content').attr('value',contentStr)
         console.log(contentStr)
       }
     }
