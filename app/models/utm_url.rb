@@ -18,8 +18,8 @@ class UtmUrl < ApplicationRecord
     source ||= ''
     source_link_type ||= ''
     source_obj_id ||= ''
+    joiner = self.original_url.include?('?') ? '&' : '?'
 
-
-    self.utm_url = self.original_url + '?' + source + source_link_type + source_obj_id + 'utm_source=' + self.utm_source.to_s + '&utm_medium=' + self.utm_medium.to_s + '&utm_campaign=' + self.utm_campaign.to_s + '&utm_content=' + self.utm_content.to_s
+    self.utm_url = (self.original_url + joiner + source + source_link_type + source_obj_id + 'utm_source=' + self.utm_source.to_s + '&utm_medium=' + self.utm_medium.to_s + '&utm_campaign=' + self.utm_campaign.to_s + '&utm_content=' + self.utm_content.to_s).gsub(/\s+/, "")
   end
 end

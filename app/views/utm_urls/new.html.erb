@@ -1,8 +1,17 @@
-<div>
+<!-- <div class="add_modal">
+    <div>
+        <input type="text" placeholder="请输入名称" id="add_modal_text">
+        <input type="text" placeholder="请输入标识" id="add_modal_sign">
+        <button onclick="add_modal()">添加</button>
+    </div>
+</div> -->
+<div style="margin-top:50px;color:#777">
+    广告系列来源(utm_source):
   <select id="source_type"></select>
   <select id="source_container"></select>
 </div>
-<div>
+<div style="margin-top:50px;color:#777">
+    广告系列媒介(utm_medium):
   <select id="medium_type">
     <option value="QRcode">二维码</option>
     <option value="link">链接</option>
@@ -27,23 +36,25 @@
     <option value="poster" id='poster'>海报</option>
   </select>
 </div>
-<div>
+<div style="margin-top:50px;color:#777">
+    广告系列名称(utm_campaign):
   <select id="campaign_type">
     <option value="edu">课程</option>
     <option value="ec">电商</option>
     <option value="job-company">招聘公司</option>
     <option value="job-employee">招聘个人</option>
   </select>
-  <input type="text" id="campaign_input" />
+  <input type="text" id="campaign_input" placeholder='如填写多个使用 - 连接'/>
 </div>
-<div>
+<div style="margin-top:50px;color:#777">
+    广告内容(utm_content):
   <select id="content_type">
     <option value="detailpage">详情页</option>
     <option value="article">文章</option>
     <option value="video">视频</option>
   </select>
-  <input type="number" id="content_id" />
-  <input type="text" id="content_input" />
+  <input type="number" id="content_id" placeholder='id(必填)'/>
+  <input type="text" id="content_input" placeholder='如填写多个使用 - 连接'/>
 </div>
 <%= simple_form_for @utm_url do |f| %>
   <div>
@@ -95,8 +106,8 @@
 <!--    <input type="text" id="sourceObjID">-->
   </div>
 
-  <div class="submit">
-    <%= f.submit "提交", class: "btn btn-primary", data: {disable_with: "提交中..."} %>
+  <div class="submit"">
+    <%= f.submit "提交", class: "btn btn-primary", id:'submit' ,data: {disable_with: "提交中..."} %>
   </div>
 
 <!--  <div>-->
@@ -105,6 +116,28 @@
 <% end %>
 
 <script>
+    // function add_modal(){
+    //     var modal = {}
+    //     text = $('#add_modal_text').val()
+    //     sign = $('#add_modal_sign').val()
+    //     if(text&&sign){
+    //     modal = {text,sign}
+    //     source['微信服务号'].unshift(modal)
+    //     console.log(source['微信服务号'])}
+    // }
+    
+    var isSubmit = false
+    if(!isSubmit) {
+        $('#submit').attr('disabled', 'disabled')
+    }
+    $('#content_id').blur(function() {
+        $(this).val() === '' ? isSubmit = false : isSubmit = true
+        if(!isSubmit) {
+            $('#submit').attr('disabled', 'disabled')
+        }else{
+            $('#submit').removeAttr('disabled', 'disabled')
+        }
+    })
     var source = new Array()
     var medium = new Array()
     var sources = ''
@@ -180,6 +213,9 @@
     }, {
         text: 'homeboy',
         sign: 'homeboy'
+    },{
+        text: '新增',
+        sign: ''
     })
     source['微信服务号'] = new Array({
         text: '影视工业网',
@@ -248,6 +284,9 @@
         container.onchange = function () {
             sourceStr = type.options[type.selectedIndex].value + '-' + container.options[container.selectedIndex].value
             $('#utm_url_utm_source').attr('value', sourceStr)
+            if(container.options[container.selectedIndex].text === '新增'){
+                
+            }
         }
     })
     // medium
@@ -255,15 +294,17 @@
         var type = document.getElementById("medium_type")
         var container = document.getElementById("medium_container")
         var style = document.getElementById("medium_style")
+
+        // judge(container_value, style_value, type_value, mediumStr)
         var judge = function (value1, value2, value3, str) {
             if (!value1 && !value2) {
                 str = value3
             } else if (!value1) {
-                str = value3 + '-' + value2
+                str = value2 + '-' + value3
             } else if (!value2) {
-                str = value3 + '-' + value1
+                str = value1 + '-' + value3
             } else {
-                str = value3 + '-' + value1 + '-' + value2
+                str = value1 + '-' + value2 + '-' + value3 
             }
             return str
         }
@@ -290,7 +331,7 @@
                 sources = "source=Link"
                 $('#utm_url_source').attr('value', "source=Link")
                 if (container_value) {
-                    mediumStr = type_value + '-' + container_value
+                    mediumStr = container_value+ '-' + type_value
                 } else {
                     mediumStr = type_value
                 }
@@ -374,7 +415,12 @@
         }
         contentStr = content(input.value, type, id.value, contentStr)
         type.onchange = function () {
+            $('#utm_url_source_obj_id').attr('value', id.value)
             contentStr = content(input.value, type, id.value, contentStr)
+            if(type.options[type.selectedIndex].value === 'detailpage'){
+                sourceObjID = ''
+                $('#utm_url_source_obj_id').attr('value', sourceObjID)
+            }
             if (type.options[type.selectedIndex].value === 'video') {
                 sourceLinkType = 'video'
                 $('#utm_url_source_link_type').attr('value', 'video')
@@ -389,6 +435,10 @@
             $('#utm_url_source_obj_id').attr('value', id.value)
             contentStr = content(input.value, type, id.value, contentStr)
             sourceObjID = id.value
+            if(type.options[type.selectedIndex].value === 'detailpage'){
+                sourceObjID = ''
+                $('#utm_url_source_obj_id').attr('value', sourceObjID)
+            }
         }
         input.onchange = function () {
             contentStr = content(input.value, type, id.value, contentStr)
