@@ -16,7 +16,7 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
-/config/database.yml
+config/database.yml
 /node_modules
 /yarn-error.log
 /.rvmrc
@@ -31,3 +31,4 @@ docker/rails/bundle/*
 .env
 config/secrets.yml
 config/puma.rb
+/config/local_env.yml

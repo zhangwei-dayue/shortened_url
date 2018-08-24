@@ -40,6 +40,7 @@ gem 'rqrcode'
 gem 'rqrcode_png'
 gem 'dragonfly', '~> 1.1.5'
 gem "browser"
+gem 'jquery-rails'
 
 gem 'mina', require: false
 gem 'mina-puma', require: false

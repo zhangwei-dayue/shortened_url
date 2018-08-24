@@ -36,7 +36,7 @@ h2 {
   text-align: center;
 }
 
-#original_url {
+.original_url {
   margin-bottom: 30px;
 }
 
@@ -71,4 +71,22 @@ h2 {
 
 .submit {
   text-align: right;
+}
+
+#utm {
+  width: 93%;
+  margin-right: 10px;
+  float: left;
+}
+
+#copy_btn {
+  float: left;
+}
+
+#utm_url {
+  margin-top: 70px;
+}
+
+#utm_original_url {
+  margin-top: 70px;
 }

@@ -1,0 +1,27 @@
+<div class="container-fluid">
+  <div class="col-md-8 col-md-offset-2">
+    <h2>UTM 链接生成</h2>
+    <hr>
+    <div class="text-center", class="original_url", id="utm_original_url">
+      <h3>原网址： </h3>
+      <p><%= @utm_url.original_url %></p>
+    </div>
+
+    <div class="text-center", id="utm_url">
+      <h3>UTM 链接： </h3>
+      <input id="utm" type="text" class="form-control" value=<%= @utm_url.utm_url %>>
+      <button class="btn btn-primary btn-sm text-right", id="copy_btn">copy</button>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  window.onload = function () {
+    var btn = document.getElementById("copy_btn");
+    var url = document.getElementById("utm");
+    btn.onclick = function (){
+      url.select();
+      document.execCommand("Copy");
+    }
+  }
+</script>
