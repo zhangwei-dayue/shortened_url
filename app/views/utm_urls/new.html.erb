@@ -1,5 +1,6 @@
 <div>
-  网址：<input type="text">
+  网址：
+  <input type="text">
 </div>
 <div>
   <select id="source_type"></select>
@@ -70,25 +71,108 @@
   var mediumStr = ''
   var campaignStr = ''
   var contentStr = ''
-  var sourceInfo = [
-    {text:'微信消息',sign:'wechat'},
-    {text:'微信小程序',sign:'mina'},
-    {text:'微信公众号',sign:'public'},
-    {text:'微信服务号',sign:'service'},
-    {text:'短信',sign:'sms'},
-    {text:'网站',sign:'web'},
-    {text:'第三方平台',sign:'purchased'},
-    {text:'直播平台',sign:'live'}
+  var sourceInfo = [{
+      text: '微信消息',
+      sign: 'wechat'
+    },
+    {
+      text: '微信小程序',
+      sign: 'mina'
+    },
+    {
+      text: '微信公众号',
+      sign: 'public'
+    },
+    {
+      text: '微信服务号',
+      sign: 'service'
+    },
+    {
+      text: '短信',
+      sign: 'sms'
+    },
+    {
+      text: '网站',
+      sign: 'web'
+    },
+    {
+      text: '第三方平台',
+      sign: 'purchased'
+    },
+    {
+      text: '直播平台',
+      sign: 'live'
+    }
   ]
 
-  source['微信消息'] = new Array({text:'好友对话框',sign:'singlemessage'},{text:'群聊对话框',sign:'groupmessage'},{text:'朋友圈',sign:'timeline'})
-  source['微信小程序'] = new Array({text:'圈子',sign:'circle'}, {text:'课程',sign:'edu'}, {text:'圈子电商',sign:'ec-cine'},{text:'CineHelloStore',sign:'ec-CineHelloStore'})
-  source['微信公众号'] = new Array({text:'影视工业网',sign:'cinehello'}, {text:'课程',sign:'edu'}, {text:'homeboy',sign:'homeboy'})
-  source['微信服务号'] = new Array({text:'影视工业网',sign:'cinehello'}, {text:'课程',sign:'edu'}, {text:'homeboy',sign:'homeboy'})
-  source['短信'] = new Array({text:'sms',sign:'sms'},)
-  source['网站'] = new Array({text:'影视工业网',sign:'cinehello'}, {text:'课程',sign:'edu'}, {text:'招聘',sign:'job'},{text:'圈子',sign:'circle'})
-  source['第三方平台'] = new Array({text:'广点通',sign:'tsa'})
-  source['直播平台'] = new Array({text:'云犀',sign:'yunxi'})
+  source['微信消息'] = new Array({
+    text: '好友对话框',
+    sign: 'singlemessage'
+  }, {
+    text: '群聊对话框',
+    sign: 'groupmessage'
+  }, {
+    text: '朋友圈',
+    sign: 'timeline'
+  })
+  source['微信小程序'] = new Array({
+    text: '圈子',
+    sign: 'circle'
+  }, {
+    text: '课程',
+    sign: 'edu'
+  }, {
+    text: '圈子电商',
+    sign: 'ec-cine'
+  }, {
+    text: 'CineHelloStore',
+    sign: 'ec-CineHelloStore'
+  })
+  source['微信公众号'] = new Array({
+    text: '影视工业网',
+    sign: 'cinehello'
+  }, {
+    text: '课程',
+    sign: 'edu'
+  }, {
+    text: 'homeboy',
+    sign: 'homeboy'
+  })
+  source['微信服务号'] = new Array({
+    text: '影视工业网',
+    sign: 'cinehello'
+  }, {
+    text: '课程',
+    sign: 'edu'
+  }, {
+    text: 'homeboy',
+    sign: 'homeboy'
+  })
+  source['短信'] = new Array({
+    text: 'sms',
+    sign: 'sms'
+  }, )
+  source['网站'] = new Array({
+    text: '影视工业网',
+    sign: 'cinehello'
+  }, {
+    text: '课程',
+    sign: 'edu'
+  }, {
+    text: '招聘',
+    sign: 'job'
+  }, {
+    text: '圈子',
+    sign: 'circle'
+  })
+  source['第三方平台'] = new Array({
+    text: '广点通',
+    sign: 'tsa'
+  })
+  source['直播平台'] = new Array({
+    text: '云犀',
+    sign: 'yunxi'
+  })
 
   // source
   function loadSourceContainer() {
@@ -101,7 +185,7 @@
       container.add(op)
     }
     sourceStr = type.options[type.selectedIndex].value + '-' + container.options[container.selectedIndex].value
-    $('#utm_source').attr('value',sourceStr)
+    $('#utm_source').attr('value', sourceStr)
   }
   $(document).ready(function () {
     var type = document.getElementById("source_type")
@@ -120,7 +204,7 @@
     }
     container.onchange = function () {
       sourceStr = type.options[type.selectedIndex].value + '-' + container.options[container.selectedIndex].value
-      $('#utm_source').attr('value',sourceStr)
+      $('#utm_source').attr('value', sourceStr)
     }
   })
   // medium
@@ -128,119 +212,102 @@
     var type = document.getElementById("medium_type")
     var container = document.getElementById("medium_container")
     var style = document.getElementById("medium_style")
-    var type_value = type.options[type.selectedIndex].value
-    type.onchange = function () {
-      var type = document.getElementById("medium_type")
-      var container = document.getElementById("medium_container")
-      var style = document.getElementById("medium_style")
+    var judge = function (value1, value2, value3, str) {
+      if (!value1 && !value2) {
+        str = value3
+      } else if (!value1) {
+        str = value3 + '-' + value2
+      } else if (!value2) {
+        str = value3 + '-' + value1
+      } else {
+        str = value3 + '-' + value1 + '-' + value2
+      }
+      return str
+    }
+    var selectIndex = function (type, container, style, index) {
       var type_value = type.options[type.selectedIndex].value
       var container_value = container.options[container.selectedIndex].value
       var style_value = style.options[style.selectedIndex].value
-      if(type_value === 'link') {
+      return {
+        type_value,
+        container_value,
+        style_value
+      }
+    }
+    var type_value = type.options[type.selectedIndex].value
+    type.onchange = function () {
+      var {
+        type_value,
+        container_value,
+        style_value
+      } = selectIndex(type, container, style)
+      if (type_value === 'link') {
         var poster = document.getElementById("poster")
         style.removeChild(poster)
-        sources = "source='Link'" 
+        sources = "source='Link'"
         $('#source').attr('value', "source='Link'")
+        if (container_value) {
+          mediumStr = type_value + '-' + container_value
+        } else {
+          mediumStr = type_value
+        }
+        $('#utm_medium').attr('value', mediumStr)
+        return
       } else {
         var createOption = document.createElement('option')
-        createOption.value="poster"
+        createOption.value = "poster"
         createOption.text = '海报'
-        createOption.id="poster"
+        createOption.id = "poster"
         style.appendChild(createOption)
         sources = ''
         $('#source').attr('value', "")
       }
-      if(!container_value && !style_value){
-        mediumStr = type_value
-      }else if(!container_value){
-        mediumStr = type_value + '-' + style_value
-      }else if(!style_value){
-        mediumStr = type_value + '-' + container_value
-      }else{
-        mediumStr = type_value + '-' + container_value+ '-' + style_value
-      }
-      $('#utm_medium').attr('value',mediumStr)
-      console.log(mediumStr)
-      console.log(sources)
+      mediumStr = judge(container_value, style_value, type_value, mediumStr)
+      $('#utm_medium').attr('value', mediumStr)
     }
     container.onchange = function () {
-      var type = document.getElementById("medium_type")
-      var container = document.getElementById("medium_container")
-      var style = document.getElementById("medium_style")
-      var type_value = type.options[type.selectedIndex].value
-      var container_value = container.options[container.selectedIndex].value
-      var style_value = style.options[style.selectedIndex].value
-      if(!container_value && !style_value){
-        mediumStr = type_value
-      }else if(!container_value){
-        mediumStr = type_value + '-' + style_value
-      }else if(!style_value){
-        mediumStr = type_value + '-' + container_value
-      }else{
-        mediumStr = type_value + '-' + container_value+ '-' + style_value
-      }
-      $('#utm_medium').attr('value',mediumStr)
-      console.log(mediumStr)
+      var {
+        type_value,
+        container_value,
+        style_value
+      } = selectIndex(type, container, style)
+      mediumStr = judge(container_value, style_value, type_value, mediumStr)
+      $('#utm_medium').attr('value', mediumStr)
     }
     style.onchange = function () {
-      var type = document.getElementById("medium_type")
-      var container = document.getElementById("medium_container")
-      var style = document.getElementById("medium_style")
-      var type_value = type.options[type.selectedIndex].value
-      var container_value = container.options[container.selectedIndex].value
-      var style_value = style.options[style.selectedIndex].value
-      if(style_value === 'poster') {
+      var {
+        type_value,
+        container_value,
+        style_value
+      } = selectIndex(type, container, style)
+      if (style_value === 'poster') {
         $('#source').attr('value', "source='scanPoster'")
       }
-      if(!container_value && !style_value){
-        mediumStr = type_value
-      }else if(!container_value){
-        mediumStr = type_value + '-' + style_value
-      }else if(!style_value){
-        mediumStr = type_value + '-' + container_value
-      }else{
-        mediumStr = type_value + '-' + container_value+ '-' + style_value
-      }
-      console.log(mediumStr)
+      mediumStr = judge(container_value, style_value, type_value, mediumStr)
+      $('#utm_medium').attr('value', mediumStr)
     }
     mediumStr = type_value
-    $('#utm_medium').attr('value',mediumStr)
-    console.log(mediumStr)
+    $('#utm_medium').attr('value', mediumStr)
   })
   // campaign
   $(document).ready(function () {
     var type = document.getElementById("campaign_type")
     var input = document.getElementById("campaign_input")
-    if(input.value){
-        campaignStr = type.options[type.selectedIndex].value + '-' + input.value
-        $('#utm_campaign').attr('value',campaignStr)
-        console.log(campaignStr)
-      }else{
+    var campaign = function (inputValue, type, campaignStr) {
+      if (inputValue) {
+        campaignStr = type.options[type.selectedIndex].value + '-' + inputValue
+        $('#utm_campaign').attr('value', campaignStr)
+      } else {
         campaignStr = type.options[type.selectedIndex].value
-        $('#utm_campaign').attr('value',campaignStr)
-        console.log(campaignStr)
-      }
-    type.onchange = function () {
-      if(input.value){
-        campaignStr = type.options[type.selectedIndex].value + '-' + input.value
-        $('#utm_campaign').attr('value',campaignStr)
-        console.log(campaignStr)
-      }else{
-        campaignStr = type.options[type.selectedIndex].value
-        $('#utm_campaign').attr('value',campaignStr)
-        console.log(campaignStr)
+        $('#utm_campaign').attr('value', campaignStr)
       }
     }
+    campaign(input.value, type, campaignStr)
+    type.onchange = function () {
+      campaign(input.value, type, campaignStr)
+    }
     input.onchange = function () {
-      if(input.value){
-        campaignStr = type.options[type.selectedIndex].value + '-' + input.value
-        $('#utm_campaign').attr('value',campaignStr)
-        console.log(campaignStr)
-      }else{
-        campaignStr = type.options[type.selectedIndex].value
-        $('#utm_campaign').attr('value',campaignStr)
-        console.log(campaignStr)
-      }
+      campaign(input.value, type, campaignStr)
     }
   })
   // content
@@ -248,56 +315,34 @@
     var type = document.getElementById("content_type")
     var input = document.getElementById("content_input")
     var id = document.getElementById('content_id')
-    if(input.value){
-      contentStr = type.options[type.selectedIndex].value + '-' + id.value +'-' +input.value
-      $('#utm_content').attr('value',contentStr)
-      console.log(contentStr)
-    }else{
-      contentStr = type.options[type.selectedIndex].value + '-' + id.value
-      $('#utm_content').attr('value',contentStr)
-      console.log(contentStr)
-    }
-    type.onchange = function () {
-      if(input.value){
-        contentStr = type.options[type.selectedIndex].value + '-' + id.value +'-' +input.value
-        $('#utm_content').attr('value',contentStr)
-        console.log(contentStr)
-      }else{
-        contentStr = type.options[type.selectedIndex].value + '-' + id.value
-        $('#utm_content').attr('value',contentStr)
-        console.log(contentStr)
+    var content = function (inputValue, type, id, contentStr) {
+      if (inputValue) {
+        contentStr = type.options[type.selectedIndex].value + '-' + id + '-' + inputValue
+        $('#utm_content').attr('value', contentStr)
+      } else {
+        contentStr = type.options[type.selectedIndex].value + '-' + id
+        $('#utm_content').attr('value', contentStr)
       }
-      if(type.options[type.selectedIndex].value === 'video'){
-        sourceLinkType='video'
-        console.log(123)
-        $('#sourceLinkType').attr('value','video')
-      }else if(type.options[type.selectedIndex].value === 'article'){
-        sourceLinkType='article'
-        $('#sourceLinkType').attr('value','article')
-      }else{
-        $('#sourceLinkType').attr('value','')
+    }
+    content(input.value, type, id.value, contentStr)
+    type.onchange = function () {
+      content(input.value, type, id.value, contentStr)
+      if (type.options[type.selectedIndex].value === 'video') {
+        sourceLinkType = 'video'
+        $('#sourceLinkType').attr('value', 'video')
+      } else if (type.options[type.selectedIndex].value === 'article') {
+        sourceLinkType = 'article'
+        $('#sourceLinkType').attr('value', 'article')
+      } else {
+        $('#sourceLinkType').attr('value', '')
       }
     }
     id.onchange = function () {
       $('#sourceObjID').attr('value', id.value)
-      if(input.value){
-        contentStr = type.options[type.selectedIndex].value + '-' + id.value +'-' +input.value
-        console.log(contentStr)
-      }else{
-        contentStr = type.options[type.selectedIndex].value + '-' + id.value
-        console.log(contentStr)
-      }
+      content(input.value, type, id.value, contentStr)
     }
     input.onchange = function () {
-      if(input.value){
-        contentStr = type.options[type.selectedIndex].value + '-' + id.value +'-' +input.value
-        $('#utm_content').attr('value',contentStr)
-        console.log(contentStr)
-      }else{
-        contentStr = type.options[type.selectedIndex].value + '-' + id.value
-        $('#utm_content').attr('value',contentStr)
-        console.log(contentStr)
-      }
+      content(input.value, type, id.value, contentStr)
     }
   })
 </script>
