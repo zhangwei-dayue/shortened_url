@@ -90,3 +90,69 @@ h2 {
 #utm_original_url {
   margin-top: 70px;
 }
+
+#utm_source {
+  display: inline-block;
+  width: 30%;
+  margin-right: 1%;
+}
+
+#utm_medium {
+  display: inline-block;
+  width: 20%;
+  margin-right: 1%;
+}
+
+#utm_campaign {
+  display: inline-block;
+  width: 20%;
+  margin-right: 1%;
+}
+
+#utm_content {
+  display: inline-block;
+  width: 20%;
+  margin-right: 1%;
+}
+
+#source {
+  display: inline-block;
+  width: 30%;
+  margin-right: 1%;
+}
+
+#sourceLinkType {
+  display: inline-block;
+  width: 30%;
+  margin-right: 1%;
+}
+
+#sourceObjID {
+  display: inline-block;
+  width: 30%;
+  margin-right: 1%;
+}
+
+.utm-params {
+  margin: 0 auto;
+}
+
+#content_input {
+  display: inline-block;
+  margin-left: 5px;
+  margin-bottom: 10px;
+}
+
+#content_id {
+  display: inline-block;
+  width: 100px;
+}
+
+select {
+  width: 100px;
+  height: 25px;
+}
+
+.utm_params_input {
+  height: 25px;
+}

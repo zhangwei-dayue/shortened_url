@@ -5,115 +5,166 @@
         <button onclick="add_modal()">添加</button>
     </div>
 </div> -->
-<div style="margin-top:50px;color:#777">
-    广告系列来源(utm_source):
-  <select id="source_type"></select>
-  <select id="source_container"></select>
-</div>
-<div style="margin-top:50px;color:#777">
-    广告系列媒介(utm_medium):
-  <select id="medium_type">
-    <option value="QRcode">二维码</option>
-    <option value="link">链接</option>
-  </select>
-  <select id="medium_container">
-    <option value=""></option>
-    <option value="top">头条</option>
-    <option value="second">次条</option>
-    <option value="thrd">三条</option>
-    <option value="forth">四条</option>
-    <option value="banner">横幅</option>
-    <option value="popup">弹窗</option>
-    <option value="carousel">轮播图</option>
-    <option value="bottom">底部</option>
-    <option value="card">微信卡片</option>
-    <option value="message">私信</option>
-  </select>
-  <select id="medium_style">
-    <option value=""></option>
-    <option value="article">文章</option>
-    <option value="video">视频</option>
-    <option value="poster" id='poster'>海报</option>
-  </select>
-</div>
-<div style="margin-top:50px;color:#777">
-    广告系列名称(utm_campaign):
-  <select id="campaign_type">
-    <option value="edu">课程</option>
-    <option value="ec">电商</option>
-    <option value="job-company">招聘公司</option>
-    <option value="job-employee">招聘个人</option>
-  </select>
-  <input type="text" id="campaign_input" placeholder='如填写多个使用 - 连接'/>
-</div>
-<div style="margin-top:50px;color:#777">
-    广告内容(utm_content):
-  <select id="content_type">
-    <option value="detailpage">详情页</option>
-    <option value="article">文章</option>
-    <option value="video">视频</option>
-  </select>
-  <input type="number" id="content_id" placeholder='id(必填)'/>
-  <input type="text" id="content_input" placeholder='如填写多个使用 - 连接'/>
-</div>
-<%= simple_form_for @utm_url do |f| %>
-  <div>
-
-    <div class="form-group">
-      <%= f.input :original_url, label: '输入网址：', input_html: {class: "form-control"} %>
+<div style="padding: 0 20px;">
+  <div class="utm-params text-center">
+    <div class="row text-left" style="margin-top:50px;color:#777">
+      <div class="col-md-2 col-md-offset-3">广告系列来源(utm_source):</div>
+      <div class="col-md-1"><select id="source_type"></select></div>
+      <div class="col-md-1"><select id="source_container"></select></div>
+    </div>
+    <div class="row text-left" style="margin-top:50px;color:#777">
+      <div class="col-md-2 col-md-offset-3">广告系列媒介(utm_medium):</div>
+      <div class="col-md-1">
+        <select id="medium_type">
+          <option value="QRcode">二维码</option>
+          <option value="link">链接</option>
+        </select>
+      </div>
+      <div class="col-md-1">
+        <select id="medium_container">
+          <option value=""></option>
+          <option value="top">头条</option>
+          <option value="second">次条</option>
+          <option value="thrd">三条</option>
+          <option value="forth">四条</option>
+          <option value="banner">横幅</option>
+          <option value="popup">弹窗</option>
+          <option value="carousel">轮播图</option>
+          <option value="bottom">底部</option>
+          <option value="card">微信卡片</option>
+          <option value="message">私信</option>
+        </select>
+      </div>
+      <div class="col-md-1">
+        <select id="medium_style">
+          <option value=""></option>
+          <option value="article">文章</option>
+          <option value="video">视频</option>
+          <option value="poster" id='poster'>海报</option>
+        </select>
+      </div>
+    </div>
+    <div class="row text-left" style="margin-top:50px;color:#777">
+      <div class="col-md-2 col-md-offset-3">广告系列名称(utm_campaign):</div>
+      <div class="col-md-1">
+        <select id="campaign_type">
+          <option value="edu">课程</option>
+          <option value="ec">电商</option>
+          <option value="job-company">招聘公司</option>
+          <option value="job-employee">招聘个人</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <input type="text" class="form-control utm_params_input" id="campaign_input" placeholder='如填写多个参数请使用 - 连接'/>
+      </div>
     </div>
 
-    <div class="form-group">
-      <%= f.input :utm_source, wrapper_html: { id: 'utm_source' }, label: 'utm_source：', input_html: {class: "form-control"} %>
+    <div class="row text-left" style="margin-top:50px;color:#777">
+      <div class="col-md-2 col-md-offset-3">广告内容(utm_content):</div>
+      <div class="col-md-1">
+        <select id="content_type">
+          <option value="detailpage">详情页</option>
+          <option value="article">文章</option>
+          <option value="video">视频</option>
+        </select>
+      </div>
+      <div class="col-md-1">
+        <input type="number" class="form-control utm_params_input" id="content_id" placeholder='id(必填)'/>
+      </div>
+      <div class="col-md-3">
+        <input type="text" class="form-control utm_params_input" id="content_input" placeholder='如填写多个参数请使用 - 连接'/>
+      </div>
     </div>
+  </div>
 
-    <div class="form-group">
-      <%= f.input :utm_medium, id: 'utm_medium', label: 'utm_medium：', input_html: {class: "form-control"} %>
-    </div>
-
-    <div class="form-group">
-      <%= f.input :utm_campaign, id: 'utm_campaign', label: 'utm_campaign：', input_html: {class: "form-control"} %>
-    </div>
-
-    <div class="form-group">
-      <%= f.input :utm_content, id: 'utm_content', label: 'utm_content：', input_html: {class: "form-control"} %>
-    </div>
-
-    <div class="form-group">
-      <%= f.input :source, id: 'source', label: 'source：', input_html: {class: "form-control"} %>
-    </div>
-
-    <div class="form-group">
-      <%= f.input :source_link_type, id: 'sourceLinkType', label: 'sourceLinkType：', input_html: {class: "form-control"} %>
-    </div>
-
-    <div class="form-group">
-      <%= f.input :source_obj_id, id: 'sourceObjID', label: 'sourceObjID：', input_html: {class: "form-control"} %>
-    </div>
-
-
-
-<!--    <div>-->
-<!--      网址：-->
-<!--      <input type="text">-->
+<!--    <div style="margin-top:50px;color:#777">-->
+<!--        广告系列媒介(utm_medium):-->
+<!--      <select id="medium_type">-->
+<!--        <option value="QRcode">二维码</option>-->
+<!--        <option value="link">链接</option>-->
+<!--      </select>-->
+<!--      <select id="medium_container">-->
+<!--        <option value=""></option>-->
+<!--        <option value="top">头条</option>-->
+<!--        <option value="second">次条</option>-->
+<!--        <option value="thrd">三条</option>-->
+<!--        <option value="forth">四条</option>-->
+<!--        <option value="banner">横幅</option>-->
+<!--        <option value="popup">弹窗</option>-->
+<!--        <option value="carousel">轮播图</option>-->
+<!--        <option value="bottom">底部</option>-->
+<!--        <option value="card">微信卡片</option>-->
+<!--        <option value="message">私信</option>-->
+<!--      </select>-->
+<!--      <select id="medium_style">-->
+<!--        <option value=""></option>-->
+<!--        <option value="article">文章</option>-->
+<!--        <option value="video">视频</option>-->
+<!--        <option value="poster" id='poster'>海报</option>-->
+<!--      </select>-->
 <!--    </div>-->
-<!--    <input type="text" id="utm_source">-->
-<!--    <input type="text" id="utm_medium">-->
-<!--    <input type="text" id="utm_campaign">-->
-<!--    <input type="text" id="utm_content">-->
-<!--    <input type="text" id="source">-->
-<!--    <input type="text" id="sourceLinkType">-->
-<!--    <input type="text" id="sourceObjID">-->
-  </div>
+<!--    <div style="margin-top:50px;color:#777">-->
+<!--        广告系列名称(utm_campaign):-->
+<!--      <select id="campaign_type">-->
+<!--        <option value="edu">课程</option>-->
+<!--        <option value="ec">电商</option>-->
+<!--        <option value="job-company">招聘公司</option>-->
+<!--        <option value="job-employee">招聘个人</option>-->
+<!--      </select>-->
+<!--      <input type="text" id="campaign_input" placeholder='如填写多个使用 - 连接'/>-->
+<!--    </div>-->
+<!--    <div style="margin-top:50px;color:#777">-->
+<!--        广告内容(utm_content):-->
+<!--      <select id="content_type">-->
+<!--        <option value="detailpage">详情页</option>-->
+<!--        <option value="article">文章</option>-->
+<!--        <option value="video">视频</option>-->
+<!--      </select>-->
+<!--      <input type="number" id="content_id" placeholder='id(必填)'/>-->
+<!--      <input type="text" id="content_input" placeholder='如填写多个使用 - 连接'/>-->
+<!--    </div>-->
 
-  <div class="submit"">
-    <%= f.submit "提交", class: "btn btn-primary", id:'submit' ,data: {disable_with: "提交中..."} %>
-  </div>
+  <%= simple_form_for @utm_url do |f| %>
+    <div>
 
-<!--  <div>-->
-<!--    <button onclick="">提交</button>-->
-<!--  </div>-->
-<% end %>
+      <div class="form-group", id="utm_original_url">
+        <%= f.input :original_url, label: '输入网址：', input_html: {class: "form-control"} %>
+      </div>
+
+      <div class="submit">
+        <%= f.submit "提交", class: "btn btn-primary btn-lg", id: 'submit', data: {disable_with: "提交中..."} %>
+      </div>
+
+      <div class="form-group", id="utm_source">
+        <%= f.input :utm_source, id: 'utm_source', label: 'utm_source：', input_html: {class: "form-control"} %>
+      </div>
+
+      <div class="form-group", id="utm_medium">
+        <%= f.input :utm_medium, id: 'utm_medium', label: 'utm_medium：', input_html: {class: "form-control"} %>
+      </div>
+
+      <div class="form-group", id="utm_campaign">
+        <%= f.input :utm_campaign, id: 'utm_campaign', label: 'utm_campaign：', input_html: {class: "form-control"} %>
+      </div>
+
+      <div class="form-group", id="utm_content">
+        <%= f.input :utm_content, id: 'utm_content', label: 'utm_content：', input_html: {class: "form-control"} %>
+      </div>
+
+      <div class="form-group", id="source">
+        <%= f.input :source, id: 'source', label: 'source：', input_html: {class: "form-control"} %>
+      </div>
+
+      <div class="form-group", id="sourceLinkType">
+        <%= f.input :source_link_type, id: 'sourceLinkType', label: 'sourceLinkType：', input_html: {class: "form-control"} %>
+      </div>
+
+      <div class="form-group", id="sourceObjID">
+        <%= f.input :source_obj_id, id: 'sourceObjID', label: 'sourceObjID：', input_html: {class: "form-control"} %>
+      </div>
+    </div>
+  <% end %>
+</div>
 
 <script>
     // function add_modal(){
@@ -125,7 +176,7 @@
     //     source['微信服务号'].unshift(modal)
     //     console.log(source['微信服务号'])}
     // }
-    
+
     var isSubmit = false
     if(!isSubmit) {
         $('#submit').attr('disabled', 'disabled')
@@ -285,7 +336,7 @@
             sourceStr = type.options[type.selectedIndex].value + '-' + container.options[container.selectedIndex].value
             $('#utm_url_utm_source').attr('value', sourceStr)
             if(container.options[container.selectedIndex].text === '新增'){
-                
+
             }
         }
     })
@@ -304,7 +355,7 @@
             } else if (!value2) {
                 str = value1 + '-' + value3
             } else {
-                str = value1 + '-' + value2 + '-' + value3 
+                str = value1 + '-' + value2 + '-' + value3
             }
             return str
         }
