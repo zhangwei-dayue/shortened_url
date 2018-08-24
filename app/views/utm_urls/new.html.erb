@@ -75,6 +75,32 @@
         <input type="text" class="form-control utm_params_input" id="content_input" placeholder='如填写多个参数请使用 - 连接'/>
       </div>
     </div>
+
+    <div class="row">
+      <div class="col-md-1 col-md-offset-10">
+        <button id="example_btn" class="btn btn-sm btn-primary">显示示例</button>
+      </div>
+    </div>
+
+    <!--举例说明-->
+    <div class="row text-left" id="utm_example" style="display:none;margin-top:30px;color:#777;font-size:12px;">
+      <div class="col-md-8 col-md-offset-3">
+        <p>例1: 微信消息卡片推送在圈子小程序内的文章4578，内容是【雷载兴--《电影照明技巧》套装预售】的广告</p>
+        <p>utm_source: wechat-message, utm_media: card-link, utm_compaign: edu-leizaixing, utm_content: article-4578</p>
+
+        <p>例2: cinehello网站横幅上的海报二维码，推广的是【魔爪MOZA AIR三轴稳定器】(ec-769)的视频。
+          要求：制作了两个海报poster1、poster2，判断两海报分别效果。</p>
+        <p>utm_source: web-cinehello, utm_media: banner-poster-QRcode, utm_compaign: ec-769, utm_content: video-4567-poster1, utm_content: video-4567-poster2</p>
+
+        <p>例3: 在云犀上布置的二维码，推广的是文章4436，内容是【雷载兴--《电影照明技巧》套装预售】(edu-4348)的广告。
+          要求：分上午下午两拨推送</p>
+        <p>utm_source: live-yunxi, utm_media: QRcode, utm_compaign: edu-4348, utm_content: article-4436-180814AM, utm_content: article-4436-180814PM</p>
+
+        <p>例4: 在圈子小程序私信推送消息链接，推广的是【魔爪MOZA AIR三轴稳定器】(ec-769)的文章。
+          要求：给标签为导演和制作的用户分别推送。</p>
+        <p>utm_source: mina-circle, utm_media: message-link, utm_compaign: ec-769, utm_content: article-4436-director, utm_content: article-4436-cameraman</p>
+      </div>
+    </div>
   </div>
 
 <!--    <div style="margin-top:50px;color:#777">-->
@@ -495,4 +521,19 @@
             contentStr = content(input.value, type, id.value, contentStr)
         }
     })
+
+    var example_btn = document.getElementById("example_btn");
+    var utm_example = document.getElementById("utm_example");
+    var temp = 1; //0为显示
+    example_btn.onclick = function () {
+        if (temp == 0) { //本来是显示的，所以就隐藏咯
+            utm_example.style = "display:none;margin-top:30px;color:#777;font-size:12px;";
+            temp = 1;
+            example_btn.innerHTML= "显示示例";
+        } else {
+            utm_example.style = "display:block;margin-top:30px;color:#777;font-size:12px;";
+            temp = 0;
+            example_btn.innerHTML= "隐藏示例";
+        }
+    }
 </script>
