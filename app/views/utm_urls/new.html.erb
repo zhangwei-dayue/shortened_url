@@ -1,10 +1,10 @@
-<!-- <div class="add_modal">
+<div class="add_modal">
     <div>
         <input type="text" placeholder="请输入名称" id="add_modal_text">
         <input type="text" placeholder="请输入标识" id="add_modal_sign">
         <button onclick="add_modal()">添加</button>
     </div>
-</div> -->
+</div>
 <div style="padding: 0 20px;">
   <div class="utm-params text-center">
     <div class="row text-left" style="margin-top:50px;color:#777">
@@ -69,7 +69,7 @@
         </select>
       </div>
       <div class="col-md-1">
-        <input type="number" class="form-control utm_params_input" id="content_id" placeholder='id(必填)'/>
+        <input type="number" class="form-control utm_params_input" id="content_id" placeholder="id"/>
       </div>
       <div class="col-md-3">
         <input type="text" class="form-control utm_params_input" id="content_input" placeholder='如填写多个参数请使用 - 连接'/>
@@ -163,11 +163,11 @@
       </div>
 
       <div class="submit">
-        <%= f.submit "提交", class: "btn btn-primary btn-lg", id: 'submit', data: {disable_with: "提交中..."} %>
+        <%= f.submit "提交", class: "btn btn-primary btn-lg", id: 'submit', data: {disable_with: "提交中..."}%>
       </div>
 
       <div class="form-group", id="utm_source">
-        <%= f.input :utm_source, id: 'utm_source', label: 'utm_source：', input_html: {class: "form-control"} %>
+        <%= f.input :utm_source, id: 'utm_source', label: 'utm_source：', input_html: {class: "form-control"}%>
       </div>
 
       <div class="form-group", id="utm_medium">
@@ -191,7 +191,7 @@
       </div>
 
       <div class="form-group", id="sourceObjID">
-        <%= f.input :source_obj_id, id: 'sourceObjID', label: 'sourceObjID：', input_html: {class: "form-control"} %>
+        <%= f.input :source_obj_id, id: 'sourceObjID', label: 'sourceObjID：', input_html: {class: "form-control"}%>
       </div>
     </div>
   <% end %>
@@ -209,16 +209,27 @@
     // }
 
     var isSubmit = false
-    if(!isSubmit) {
-        $('#submit').attr('disabled', 'disabled')
+    
+    if($('#content_type').val() === 'article'||$('#content_type').val() === 'video'){
+        if(!isSubmit) {
+            $('#submit').attr('disabled', 'disabled')
+            $('#content_id').attr('placeholder','id(必填)')
+        }
     }
     $('#content_id').blur(function() {
         $(this).val() === '' ? isSubmit = false : isSubmit = true
-        if(!isSubmit) {
-            $('#submit').attr('disabled', 'disabled')
+        if($('#content_type').val() === 'article'||$('#content_type').val() === 'video'){
+            if(!isSubmit) {
+                $('#submit').attr('disabled', 'disabled')
+                $('#content_id').attr('placeholder','id(必填)')
+            }else{
+                $('#submit').removeAttr('disabled', 'disabled')
+                $('#content_id').attr('placeholder','id')
+            }
         }else{
             $('#submit').removeAttr('disabled', 'disabled')
-        }
+            $('#content_id').attr('placeholder','id')
+        } 
     })
     var source = new Array()
     var medium = new Array()
@@ -485,14 +496,43 @@
         var input = document.getElementById("content_input")
         var id = document.getElementById('content_id')
         var content = function (inputValue, type, id, contentStr) {
+            var typeValue = type.options[type.selectedIndex].value
             if (inputValue) {
-                contentStr = type.options[type.selectedIndex].value + '-' + id + '-' + inputValue
-                $('#utm_url_utm_content').attr('value', contentStr)
-                return contentStr
+                if(typeValue==='article'|| typeValue==='video'){
+                    contentStr = typeValue + '-' + id + '-' + inputValue
+                    $('#utm_url_utm_content').attr('value', contentStr)
+                    $('#content_id').attr('placeholder','id(必填)')
+                    return contentStr
+                }else if(typeValue==='detailpage'&& id){
+                    contentStr = typeValue + '-' + id + '-' + inputValue
+                    $('#utm_url_utm_content').attr('value', contentStr)
+                    $('#content_id').attr('placeholder','id')
+                    return contentStr
+                }else if(typeValue==='detailpage'&& !id){
+                    contentStr = typeValue + '-' + inputValue
+                    $('#utm_url_utm_content').attr('value', contentStr)
+                    $('#content_id').attr('placeholder','id')
+                    return contentStr
+                }
             } else {
-                contentStr = type.options[type.selectedIndex].value + '-' + id
-                $('#utm_url_utm_content').attr('value', contentStr)
-                return contentStr
+                if(typeValue==='article'|| typeValue==='video'){
+                    contentStr = typeValue + '-' + id
+                    $('#utm_url_utm_content').attr('value', contentStr)
+                    $('#content_id').attr('placeholder','id(必填)')
+                    return contentStr
+                }
+                if(typeValue==='detailpage' && id){
+                    contentStr = typeValue + '-' + id
+                    $('#utm_url_utm_content').attr('value', contentStr)
+                    $('#content_id').attr('placeholder','id')
+                    return contentStr
+                }
+                if(typeValue==='detailpage' && !id){
+                    contentStr = typeValue
+                    $('#utm_url_utm_content').attr('value', contentStr)
+                    $('#content_id').attr('placeholder','id')
+                    return contentStr
+                }
             }
         }
         contentStr = content(input.value, type, id.value, contentStr)
@@ -500,17 +540,26 @@
             $('#utm_url_source_obj_id').attr('value', id.value)
             contentStr = content(input.value, type, id.value, contentStr)
             if(type.options[type.selectedIndex].value === 'detailpage'){
-                sourceObjID = ''
-                $('#utm_url_source_obj_id').attr('value', sourceObjID)
+                $('#content_id').attr('placeholder','id')
             }
             if (type.options[type.selectedIndex].value === 'video') {
                 sourceLinkType = 'video'
                 $('#utm_url_source_link_type').attr('value', 'video')
+                if(!id.value){
+                    $('#submit').attr('disabled', 'disabled')
+                }
+                $('#content_id').attr('placeholder','id(必填)')
             } else if (type.options[type.selectedIndex].value === 'article') {
                 sourceLinkType = 'article'
                 $('#utm_url_source_link_type').attr('value', 'article')
+                if(!id.value){
+                    $('#submit').attr('disabled', 'disabled')
+                }
+                $('#content_id').attr('placeholder','id(必填)')
             } else {
                 $('#utm_url_source_link_type').attr('value', '')
+                $('#submit').removeAttr('disabled', 'disabled')
+                $('#content_id').attr('placeholder','id')
             }
         }
         id.onchange = function () {
