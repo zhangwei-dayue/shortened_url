@@ -209,21 +209,12 @@
     function add_modal() {
         var text = $('#add_modal_text').val()
         var sign = $('#add_modal_sign').val()
-        $('#source_container').append("<option value=" + text + ">" + sign + "</option>")
+        $('#source_container').append("<option value=" + sign + ">" + text + "</option>")
         if(ifAddContent){
-            $('#content_type').append("<option value=" + text + ">" + sign + "</option>")
+            $('#content_type').append("<option value=" + sign + ">" + text + "</option>")
             ifAddContent = false
         }
     }
-    // function add_modal(){
-    //     var modal = {}
-    //     text = $('#add_modal_text').val()
-    //     sign = $('#add_modal_sign').val()
-    //     if(text&&sign){
-    //     modal = {text,sign}
-    //     source['微信服务号'].unshift(modal)
-    //     console.log(source['微信服务号'])}
-    // }
 
     var isSubmit = false
     
@@ -513,22 +504,25 @@
         var id = document.getElementById('content_id')
         var content = function (inputValue, type, id, contentStr) {
             var typeValue = type.options[type.selectedIndex].value
+            console.log(typeValue)
             if (inputValue) {
                 if(typeValue==='article'|| typeValue==='video'){
                     contentStr = typeValue + '-' + id + '-' + inputValue
                     $('#utm_url_utm_content').attr('value', contentStr)
                     $('#content_id').attr('placeholder','id(必填)')
                     return contentStr
-                }else if(typeValue==='detailpage'&& id){
-                    contentStr = typeValue + '-' + id + '-' + inputValue
-                    $('#utm_url_utm_content').attr('value', contentStr)
-                    $('#content_id').attr('placeholder','id')
-                    return contentStr
-                }else if(typeValue==='detailpage'&& !id){
-                    contentStr = typeValue + '-' + inputValue
-                    $('#utm_url_utm_content').attr('value', contentStr)
-                    $('#content_id').attr('placeholder','id')
-                    return contentStr
+                }else{
+                    if(id){
+                        contentStr = typeValue + '-' + id + '-' + inputValue
+                        $('#utm_url_utm_content').attr('value', contentStr)
+                        $('#content_id').attr('placeholder','id')
+                        return contentStr
+                    }if(!id){
+                        contentStr = typeValue + '-' + inputValue
+                        $('#utm_url_utm_content').attr('value', contentStr)
+                        $('#content_id').attr('placeholder','id')
+                        return contentStr
+                    }
                 }
             } else {
                 if(typeValue==='article'|| typeValue==='video'){
@@ -536,18 +530,19 @@
                     $('#utm_url_utm_content').attr('value', contentStr)
                     $('#content_id').attr('placeholder','id(必填)')
                     return contentStr
-                }
-                if(typeValue==='detailpage' && id){
-                    contentStr = typeValue + '-' + id
-                    $('#utm_url_utm_content').attr('value', contentStr)
-                    $('#content_id').attr('placeholder','id')
-                    return contentStr
-                }
-                if(typeValue==='detailpage' && !id){
-                    contentStr = typeValue
-                    $('#utm_url_utm_content').attr('value', contentStr)
-                    $('#content_id').attr('placeholder','id')
-                    return contentStr
+                }else{
+                    if(id){
+                        contentStr = typeValue + '-' + id
+                        $('#utm_url_utm_content').attr('value', contentStr)
+                        $('#content_id').attr('placeholder','id')
+                        return contentStr
+                    }
+                    if(!id){
+                        contentStr = typeValue
+                        $('#utm_url_utm_content').attr('value', contentStr)
+                        $('#content_id').attr('placeholder','id')
+                        return contentStr
+                    }
                 }
             }
         }
@@ -555,6 +550,7 @@
         type.onchange = function () {
             $('#utm_url_source_obj_id').attr('value', id.value)
             contentStr = content(input.value, type, id.value, contentStr)
+            console.log(contentStr)
             if(type.options[type.selectedIndex].value === 'detailpage'){
                 $('#content_id').attr('placeholder','id')
             }
