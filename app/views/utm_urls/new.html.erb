@@ -1,5 +1,5 @@
 <div class="add_modal" id="add_modal" style="display: none">
-    <input type="text" class="form-control utm_params_input" placeholder="请输入名称" id="add_modal_text" style="width: 150px;">
+    <input type="text" class="form-control utm_params_input" placeholder="请输入名称" id="add_modal_text" style="width: 150px;display:none">
     <input type="text" class="form-control utm_params_input" placeholder="请输入标识" id="add_modal_sign" style="width: 150px;">
     <button class='btn btn-xs btn-primary' onclick="add_modal()" id="add_modal_btn">添加</button>
 </div>
@@ -173,6 +173,7 @@
         add_modal_form = document.getElementById('add_modal');
         add_modal_btn.after(add_modal_form)
         $('#add_modal').show()
+        qwer = 'source'
     }
     function addContent() {
         add_modal_btn = document.getElementById('contentNewAdd');
@@ -180,15 +181,23 @@
         add_modal_btn.after(add_modal_form)
         $('#add_modal').show()
         ifAddContent = true
+        qwer = 'content'
+    }
+    function addCompagin () {
+        add_modal_btn = document.getElementById('qwer');
+        add_modal_form = document.getElementById('add_modal');
+        add_modal_btn.after(add_modal_form)
+        $('#add_modal').show()
+        qwer = 'compagin'
     }
     function add_modal() {
         var text = $('#add_modal_sign').val()
         var sign = $('#add_modal_sign').val()
+        console.log(qwer)
         if(text&&sign){
-            if(ifAddContent){
+            if(qwer === 'content'){
                 $('#content_type').append("<option value=" + sign + ">" + text + "</option>")
-                ifAddContent = false
-            }else if(qwer = 'xjbg'){
+            }else if(qwer === 'compagin'){
                 $('#campaign_type').append("<option value=" + sign + ">" + text + "</option>")
             }else{
                 $('#source_container').append("<option value=" + sign + ">" + text + "</option>")
@@ -197,14 +206,6 @@
         }else{
             alert('添加内容不能为空')
         }
-    }
-
-    function addCompagin () {
-        add_modal_btn = document.getElementById('qwer');
-        add_modal_form = document.getElementById('add_modal');
-        add_modal_btn.after(add_modal_form)
-        $('#add_modal').show()
-        qwer = 'xjbg'
     }
 
     if($('#content_type').val() === 'article'||$('#content_type').val() === 'video'){
