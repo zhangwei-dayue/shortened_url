@@ -178,10 +178,11 @@
         var text = $('#add_modal_text').val()
         var sign = $('#add_modal_sign').val()
         if(text&&sign){
-            $('#source_container').append("<option value=" + sign + ">" + text + "</option>")
             if(ifAddContent){
                 $('#content_type').append("<option value=" + sign + ">" + text + "</option>")
                 ifAddContent = false
+            }else{
+                $('#source_container').append("<option value=" + sign + ">" + text + "</option>")
             }
             $('#add_modal').hide()
         }else{
