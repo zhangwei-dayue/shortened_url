@@ -549,7 +549,7 @@
             $('#utm_url_source_obj_id').attr('value', id.value)
             contentStr = content(input.value, type, id.value, contentStr)
             sourceObjID = id.value
-            if(type.options[type.selectedIndex].value === 'detailpage'){
+            if(type.options[type.selectedIndex].value !== 'video' || type.options[type.selectedIndex].value !== 'article'){
                 sourceObjID = ''
                 $('#utm_url_source_obj_id').attr('value', sourceObjID)
             }
