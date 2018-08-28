@@ -169,7 +169,15 @@ select {
 
 .add_modal {
   float: left;
+  display: flex;
+  flex-direction: row;
   margin-left: 20px;
+  button{
+    width: 50px;
+  }
+  input{
+    height:30px;
+  }
 }
 
 .add_modal_text {

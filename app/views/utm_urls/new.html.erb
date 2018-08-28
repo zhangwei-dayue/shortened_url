@@ -10,15 +10,9 @@
       <div class="col-md-1"><select id="source_type"></select></div>
       <div class="col-md-5">
         <select id="source_container"></select>
-        <div class="col-md-offset-1">
-          <button onclick="addCSource()" class='btn btn-xs btn-primary' id="newAdd">新增</button>
+        <div class="col-md-offset-1" style="position: absolute">
+          <button onclick="addCSource()" class='btn btn-xs btn-primary' id="newAdd" style="display: none">新增</button>
         </div>
-<!--        <div onclick="addCSource()" id="newAdd" style="display: none">新增</div>-->
-<!--        <div class="add_modal" id="add_source_modal" style="display: none">-->
-<!--          <input type="text" placeholder="请输入名称" id="add_modal_text">-->
-<!--          <input type="text" placeholder="请输入标识" id="add_modal_sign">-->
-<!--          <button onclick="add_modal()">添加</button>-->
-<!--        </div>-->
       </div>
 
     </div>
@@ -82,7 +76,6 @@
             <button onclick="addContent()" class='btn btn-xs btn-primary' id="contentNewAdd">新增</button>
           </div>
         </div>
-<!--        <button onclick="addContent()" id="contentNewAdd">新增</button>-->
       </div>
       <div class="col-md-1">
         <input type="number" class="form-control utm_params_input" id="content_id" placeholder="id"/>
@@ -123,53 +116,6 @@
       </div>
     </div>
   </div>
-
-<!--    <div style="margin-top:50px;color:#777">-->
-<!--        广告系列媒介(utm_medium):-->
-<!--      <select id="medium_type">-->
-<!--        <option value="QRcode">二维码</option>-->
-<!--        <option value="link">链接</option>-->
-<!--      </select>-->
-<!--      <select id="medium_container">-->
-<!--        <option value=""></option>-->
-<!--        <option value="top">头条</option>-->
-<!--        <option value="second">次条</option>-->
-<!--        <option value="thrd">三条</option>-->
-<!--        <option value="forth">四条</option>-->
-<!--        <option value="banner">横幅</option>-->
-<!--        <option value="popup">弹窗</option>-->
-<!--        <option value="carousel">轮播图</option>-->
-<!--        <option value="bottom">底部</option>-->
-<!--        <option value="card">微信卡片</option>-->
-<!--        <option value="message">私信</option>-->
-<!--      </select>-->
-<!--      <select id="medium_style">-->
-<!--        <option value=""></option>-->
-<!--        <option value="article">文章</option>-->
-<!--        <option value="video">视频</option>-->
-<!--        <option value="poster" id='poster'>海报</option>-->
-<!--      </select>-->
-<!--    </div>-->
-<!--    <div style="margin-top:50px;color:#777">-->
-<!--        广告系列名称(utm_campaign):-->
-<!--      <select id="campaign_type">-->
-<!--        <option value="edu">课程</option>-->
-<!--        <option value="ec">电商</option>-->
-<!--        <option value="job-company">招聘公司</option>-->
-<!--        <option value="job-employee">招聘个人</option>-->
-<!--      </select>-->
-<!--      <input type="text" id="campaign_input" placeholder='如填写多个使用 - 连接'/>-->
-<!--    </div>-->
-<!--    <div style="margin-top:50px;color:#777">-->
-<!--        广告内容(utm_content):-->
-<!--      <select id="content_type">-->
-<!--        <option value="detailpage">详情页</option>-->
-<!--        <option value="article">文章</option>-->
-<!--        <option value="video">视频</option>-->
-<!--      </select>-->
-<!--      <input type="number" id="content_id" placeholder='id(必填)'/>-->
-<!--      <input type="text" id="content_input" placeholder='如填写多个使用 - 连接'/>-->
-<!--    </div>-->
 
   <%= simple_form_for @utm_url do |f| %>
     <div>
@@ -231,12 +177,16 @@
     function add_modal() {
         var text = $('#add_modal_text').val()
         var sign = $('#add_modal_sign').val()
-        $('#source_container').append("<option value=" + sign + ">" + text + "</option>")
-        if(ifAddContent){
-            $('#content_type').append("<option value=" + sign + ">" + text + "</option>")
-            ifAddContent = false
+        if(text&&sign){
+            $('#source_container').append("<option value=" + sign + ">" + text + "</option>")
+            if(ifAddContent){
+                $('#content_type').append("<option value=" + sign + ">" + text + "</option>")
+                ifAddContent = false
+            }
+            $('#add_modal').hide()
+        }else{
+            alert('添加内容不能为空')
         }
-        $('#add_modal').hide()
     }
 
     var isSubmit = false
