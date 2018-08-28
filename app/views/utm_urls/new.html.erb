@@ -523,10 +523,6 @@
         type.onchange = function () {
             $('#utm_url_source_obj_id').attr('value', id.value)
             contentStr = content(input.value, type, id.value, contentStr)
-            console.log(contentStr)
-            if(type.options[type.selectedIndex].value === 'detailpage'){
-                $('#content_id').attr('placeholder','id')
-            }
             if (type.options[type.selectedIndex].value === 'video') {
                 sourceLinkType = 'video'
                 $('#utm_url_source_link_type').attr('value', 'video')
@@ -545,6 +541,7 @@
                 $('#utm_url_source_link_type').attr('value', '')
                 $('#submit').removeAttr('disabled', 'disabled')
                 $('#content_id').attr('placeholder','id')
+                $('#utm_url_source_obj_id').attr('value', '')
             }
         }
         id.onchange = function () {
