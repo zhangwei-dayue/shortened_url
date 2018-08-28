@@ -10,4 +10,5 @@ Rails.application.routes.draw do
   get "/shortened_urls/fetch_original_url", to: "shortened_urls#fetch_original_url"
   # get "/utm_urls/new", to: "utm_urls#new"
   resources :utm_urls
+  resources :shortened_urls, only: :create
 end

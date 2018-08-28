@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    volumes:
+      - .:/var/url_shortener
+    ports:
+      - "3000:3000"
+    links:
+      - mysql
+    depends_on:
+      - mysql
+    environment:
+      DB_USER : root
+      DB_name: url_shortener
+      DB_PASSWORD: password
+      DB_HOST: mysql
+    network_mode: "bridge"
+  mysql:
+    image: "mysql:5.7"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: url_shortener
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker/mysql/db:/var/lib/mysql
+    command: ['mysqld', '--character-set-server=utf8']
+    network_mode: "bridge"

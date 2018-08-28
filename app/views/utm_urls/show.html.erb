@@ -10,7 +10,10 @@
     <div class="text-center", id="utm_url">
       <h3>UTM 链接： </h3>
       <input id="utm" type="text" class="form-control" value=<%= @utm_url.utm_url %>>
-      <button class="btn btn-primary btn-sm text-right", id="copy_btn">copy</button>
+<!--      <button class="btn btn-primary btn-sm text-right", id="copy_btn">-->
+        <%= link_to '一键生成短网址', shortened_urls_path(:shortened_url => {:original_url => "#{@utm_url.utm_url}"}), :method => :post, class: 'btn btn-primary btn-sm text-right', id: 'generate_short_btn' %>
+<!--      </button>-->
+      <%#= link_to '一键生成短网址', {:controller => "shortened_urls", :action => "create", (shortened_url[original_url]).to_sym => "#{@utm_url.utm_url}" }, :method => :post, class: 'btn btn-primary btn-sm text-right', id: 'generate_short_btn' %>
     </div>
   </div>
 </div>
@@ -35,3 +38,4 @@
 　　window.history.forward(1);
 　　})
 </script>
+
