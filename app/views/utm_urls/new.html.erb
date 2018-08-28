@@ -178,10 +178,11 @@
         var text = $('#add_modal_text').val()
         var sign = $('#add_modal_sign').val()
         if(text&&sign){
-            $('#source_container').append("<option value=" + sign + ">" + text + "</option>")
             if(ifAddContent){
                 $('#content_type').append("<option value=" + sign + ">" + text + "</option>")
                 ifAddContent = false
+            }else{
+                $('#source_container').append("<option value=" + sign + ">" + text + "</option>")
             }
             $('#add_modal').hide()
         }else{
@@ -548,7 +549,7 @@
             $('#utm_url_source_obj_id').attr('value', id.value)
             contentStr = content(input.value, type, id.value, contentStr)
             sourceObjID = id.value
-            if(type.options[type.selectedIndex].value === 'detailpage'){
+            if(type.options[type.selectedIndex].value !== 'video' || type.options[type.selectedIndex].value !== 'article'){
                 sourceObjID = ''
                 $('#utm_url_source_obj_id').attr('value', sourceObjID)
             }
