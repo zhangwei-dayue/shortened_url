@@ -1,6 +1,6 @@
 class UtmUrl < ApplicationRecord
   validates_presence_of :original_url, :utm_source, :utm_medium, :utm_campaign, :utm_content, :utm_url
-  validates_format_of :original_url, with: /\A(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?\z/ix, message: "输入的网址是无效的"
+  validates_format_of :original_url, with: /\A(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?/ix, message: "输入的网址是无效的"
 
   def find_duplicate
     UtmUrl.find_by_utm_url(self.utm_url)
