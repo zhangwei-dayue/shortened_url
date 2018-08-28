@@ -57,6 +57,11 @@
           <option value="job-company">招聘公司</option>
           <option value="job-employee">招聘个人</option>
         </select>
+        <div class="row">
+            <div class="col-md-offset-6">
+                    <button onclick="addCompagin()" id="qwer" class='btn btn-xs btn-primary' style="margin-left:20px;">新增</button>
+                </div>
+            </div>
       </div>
       <div class="col-md-3">
         <input type="text" class="form-control utm_params_input" id="campaign_input" placeholder='如填写多个参数请使用 - 连接'/>
@@ -161,6 +166,8 @@
 
 <script>
     var ifAddContent = false
+    var isSubmit = false
+    var qwer = ''
     function addCSource(){
         add_modal_btn = document.getElementById('newAdd');
         add_modal_form = document.getElementById('add_modal');
@@ -175,12 +182,14 @@
         ifAddContent = true
     }
     function add_modal() {
-        var text = $('#add_modal_text').val()
+        var text = $('#add_modal_sign').val()
         var sign = $('#add_modal_sign').val()
         if(text&&sign){
             if(ifAddContent){
                 $('#content_type').append("<option value=" + sign + ">" + text + "</option>")
                 ifAddContent = false
+            }else if(qwer = 'xjbg'){
+                $('#campaign_type').append("<option value=" + sign + ">" + text + "</option>")
             }else{
                 $('#source_container').append("<option value=" + sign + ">" + text + "</option>")
             }
@@ -190,7 +199,13 @@
         }
     }
 
-    var isSubmit = false
+    function addCompagin () {
+        add_modal_btn = document.getElementById('qwer');
+        add_modal_form = document.getElementById('add_modal');
+        add_modal_btn.after(add_modal_form)
+        $('#add_modal').show()
+        qwer = 'xjbg'
+    }
 
     if($('#content_type').val() === 'article'||$('#content_type').val() === 'video'){
         if(!isSubmit) {
