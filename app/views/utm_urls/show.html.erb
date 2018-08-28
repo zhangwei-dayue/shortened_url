@@ -19,14 +19,6 @@
 </div>
 
 <script type="text/javascript">
-  window.onload = function () {
-    var btn = document.getElementById("copy_btn");
-    var url = document.getElementById("utm");
-    btn.onclick = function (){
-      url.select();
-      document.execCommand("Copy");
-    }
-  }
   $(function() {
 　　if (window.history && window.history.pushState) {
 　　$(window).on('popstate', function () {
@@ -38,4 +30,3 @@
 　　window.history.forward(1);
 　　})
 </script>
-
