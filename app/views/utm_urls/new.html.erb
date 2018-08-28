@@ -1,15 +1,26 @@
 <div class="add_modal" id="add_modal" style="display: none">
     <input type="text" placeholder="请输入名称" id="add_modal_text">
     <input type="text" placeholder="请输入标识" id="add_modal_sign">
-    <button onclick="add_modal()">添加</button>
+    <button onclick="add_modal()" id="add_modal_btn">添加</button>
 </div>
 <div style="padding: 0 20px;">
   <div class="utm-params text-center">
     <div class="row text-left" style="margin-top:50px;color:#777">
       <div class="col-md-2 col-md-offset-3">广告系列来源(utm_source):</div>
       <div class="col-md-1"><select id="source_type"></select></div>
-      <div class="col-md-1"><select id="source_container"></select></div>
-      <div onclick="addCSource()" id="newAdd" style="display: none">新增</div>
+      <div class="col-md-5">
+        <select id="source_container"></select>
+        <div class="col-md-offset-1">
+          <button onclick="addCSource()" class='btn btn-xs btn-primary' id="newAdd">新增</button>
+        </div>
+<!--        <div onclick="addCSource()" id="newAdd" style="display: none">新增</div>-->
+<!--        <div class="add_modal" id="add_source_modal" style="display: none">-->
+<!--          <input type="text" placeholder="请输入名称" id="add_modal_text">-->
+<!--          <input type="text" placeholder="请输入标识" id="add_modal_sign">-->
+<!--          <button onclick="add_modal()">添加</button>-->
+<!--        </div>-->
+      </div>
+
     </div>
     <div class="row text-left" style="margin-top:50px;color:#777">
       <div class="col-md-2 col-md-offset-3">广告系列媒介(utm_medium):</div>
@@ -66,7 +77,12 @@
           <option value="article">文章</option>
           <option value="video">视频</option>
         </select>
-        <button onclick="addContent()" id="contentNewAdd">新增</button>
+        <div class="row">
+          <div class="col-md-offset-6">
+            <button onclick="addContent()" class='btn btn-xs btn-primary' id="contentNewAdd">新增</button>
+          </div>
+        </div>
+<!--        <button onclick="addContent()" id="contentNewAdd">新增</button>-->
       </div>
       <div class="col-md-1">
         <input type="number" class="form-control utm_params_input" id="content_id" placeholder="id"/>
@@ -200,9 +216,15 @@
 <script>
     var ifAddContent = false
     function addCSource(){
+        add_modal_btn = document.getElementById('newAdd');
+        add_modal_form = document.getElementById('add_modal');
+        add_modal_btn.after(add_modal_form)
         $('#add_modal').show()
     }
     function addContent() {
+        add_modal_btn = document.getElementById('contentNewAdd');
+        add_modal_form = document.getElementById('add_modal');
+        add_modal_btn.after(add_modal_form)
         $('#add_modal').show()
         ifAddContent = true
     }
@@ -214,10 +236,11 @@
             $('#content_type').append("<option value=" + sign + ">" + text + "</option>")
             ifAddContent = false
         }
+        $('#add_modal').hide()
     }
 
     var isSubmit = false
-    
+
     if($('#content_type').val() === 'article'||$('#content_type').val() === 'video'){
         if(!isSubmit) {
             $('#submit').attr('disabled', 'disabled')
@@ -237,7 +260,7 @@
         }else{
             $('#submit').removeAttr('disabled', 'disabled')
             $('#content_id').attr('placeholder','id')
-        } 
+        }
     })
     var source = new Array()
     var medium = new Array()
