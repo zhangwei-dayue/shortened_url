@@ -1,7 +1,7 @@
 <div class="add_modal" id="add_modal" style="display: none">
     <input type="text" class="form-control utm_params_input" placeholder="请输入名称" id="add_modal_text" style="width: 150px;display:none">
-    <input type="text" class="form-control utm_params_input" placeholder="请输入内容(英文)后选择" id="add_modal_sign" style="width: 175px;">
-    <button class='btn btn-xs btn-primary' onclick="add_modal()" id="add_modal_btn">添加</button>
+    <input type="text" class="form-control utm_params_input" placeholder="请输入内容(英文)后选择" id="add_modal_sign" style="width: 170px;">
+    <button class='btn btn-sm btn-primary' onclick="add_modal()" id="add_modal_btn">添加</button>
 </div>
 <div style="padding: 0 20px;">
   <div class="utm-params text-center">
@@ -11,7 +11,7 @@
       <div class="col-md-5">
         <select id="source_container"></select>
         <div class="col-md-offset-1" style="position: absolute">
-          <button onclick="addCSource()" class='btn btn-xs btn-primary' id="newAdd" style="display: none">新增</button>
+          <button onclick="addCSource()" class='btn btn-xs btn-primary' id="newAdd" style="display: none">新增分类</button>
         </div>
       </div>
 
@@ -59,7 +59,7 @@
         </select>
         <div class="row">
             <div class="col-md-offset-6">
-                    <button onclick="addCompagin()" id="qwer" class='btn btn-xs btn-primary' style="margin-top:2px;margin-left:20px;">新增</button>
+                    <button onclick="addCompagin()" id="qwer" class='btn btn-xs btn-primary' style="margin-top:2px;margin-left:-5px;">新增分类</button>
                 </div>
             </div>
       </div>
@@ -78,7 +78,7 @@
         </select>
         <div class="row">
           <div class="col-md-offset-6">
-            <button onclick="addContent()" class='btn btn-xs btn-primary' id="contentNewAdd">新增</button>
+            <button onclick="addContent()" class='btn btn-xs btn-primary' id="contentNewAdd">新增分类</button>
           </div>
         </div>
       </div>
@@ -124,7 +124,6 @@
 
   <%= simple_form_for @utm_url do |f| %>
     <div>
-
       <div class="form-group", id="utm_original_url">
         <%= f.input :original_url, label: '输入网址：', input_html: {class: "form-control"} %>
       </div>
@@ -133,20 +132,21 @@
         <%= f.submit "提交", class: "btn btn-primary btn-lg", id: 'submit', data: {disable_with: "提交中..."}%>
       </div>
 
+      <h4>预览：</h4>
       <div class="form-group", id="utm_source">
-        <%= f.input :utm_source, id: 'utm_source', label: 'utm_source：', input_html: {class: "form-control"}, readonly: true%>
+        <%= f.input :utm_source, id: 'utm_source', label: 'utm_source（广告系列来源）：', input_html: {class: "form-control"}, readonly: true%>
       </div>
 
       <div class="form-group", id="utm_medium">
-        <%= f.input :utm_medium, id: 'utm_medium', label: 'utm_medium：', input_html: {class: "form-control"}, readonly: true %>
+        <%= f.input :utm_medium, id: 'utm_medium', label: 'utm_medium（广告系列媒介）：', input_html: {class: "form-control"}, readonly: true %>
       </div>
 
       <div class="form-group", id="utm_campaign">
-        <%= f.input :utm_campaign, id: 'utm_campaign', label: 'utm_campaign：', input_html: {class: "form-control"}, readonly: true %>
+        <%= f.input :utm_campaign, id: 'utm_campaign', label: 'utm_campaign（广告系列名称）：', input_html: {class: "form-control"}, readonly: true %>
       </div>
 
       <div class="form-group", id="utm_content">
-        <%= f.input :utm_content, id: 'utm_content', label: 'utm_content：', input_html: {class: "form-control"}, readonly: true%>
+        <%= f.input :utm_content, id: 'utm_content', label: 'utm_content（广告系列内容）：', input_html: {class: "form-control"}, readonly: true%>
       </div>
 
       <div class="form-group", id="source">
@@ -173,6 +173,7 @@
         add_modal_form = document.getElementById('add_modal');
         add_modal_btn.after(add_modal_form)
         $('#add_modal').show()
+        add_modal_btn.style = "margin-left:5px";
         qwer = 'source'
     }
     function addContent() {
@@ -197,10 +198,20 @@
         if(text&&sign){
             if(qwer === 'content'){
                 $('#content_type').append("<option value=" + sign + ">" + text + "</option>")
+                $('#content_type').find("option[text="+text+"]").attr("selected",true);
+                $('#content_type').val(sign);
+                $('#content_type').trigger('change')
+
             }else if(qwer === 'compagin'){
                 $('#campaign_type').append("<option value=" + sign + ">" + text + "</option>")
+                $('#campaign_type').val(sign);
+                $('#campaign_type').find("option[text="+text+"]").attr("selected",true);
+                $('#campaign_type').trigger('change')
             }else{
                 $('#source_container').append("<option value=" + sign + ">" + text + "</option>")
+                $('#source_container').find("option[text="+text+"]").attr("selected",true);
+                $('#source_container').val(sign);
+                $('#source_container').trigger('change')
             }
             $('#add_modal').hide()
         }else{
