@@ -17,8 +17,20 @@
         </div>
       </div>
       <div class="col-md-4 col-md-offset-1 text-center", id="short_url">
-        <p><%= @short_url %></p>
+        <input id="short" type="text" class="form-control" value=<%= @short_url %>>
+        <button class="btn btn-primary btn-xs", id="copy_btn">copy</button>
       </div>
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+    window.onload = function () {
+        var btn = document.getElementById("copy_btn");
+        var url = document.getElementById("short");
+        btn.onclick = function (){
+            url.select();
+            document.execCommand("Copy");
+        }
+    }
+</script>

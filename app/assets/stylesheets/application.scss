@@ -173,10 +173,10 @@ select {
   flex-direction: row;
   margin-left: 20px;
   button{
-    width: 50px;
+    //width: 50px;
   }
   input{
-    height:30px;
+    //height:30px;
   }
 }
 
@@ -196,3 +196,13 @@ select {
   display: block;
 }
 
+#short {
+  float: left;
+  width: 50%;
+  height: 23px;
+  margin-left: 20%;
+}
+
+#copy_btn {
+  float: left;
+}
