@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180823032342) do
+ActiveRecord::Schema.define(version: 20181115071340) do
 
   create_table "request_user_agents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "user_agent_content"
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20180823032342) do
     t.datetime "updated_at", null: false
     t.bigint "shortened_url_id"
     t.string "client_ip"
+    t.string "query_string"
     t.index ["shortened_url_id"], name: "index_request_user_agents_on_shortened_url_id"
   end
 
