@@ -107,8 +107,9 @@ class ShortenedUrlsController < ApplicationController
     def update_request_statistics
       user_agent = request.user_agent
       query_string = URI(request.original_url).query
+      http_referer = request.referer
 
-      @url.request_user_agents.create(user_agent_content: user_agent, client_ip: request.remote_ip, query_string: query_string)
+      @url.request_user_agents.create(user_agent_content: user_agent, client_ip: request.remote_ip, query_string: query_string, http_referer: http_referer)
 
       # 更新请求数量
       @url.increment!(:request_count)
